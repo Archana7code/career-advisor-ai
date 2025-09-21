@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Skill Roadmap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Raleway:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-500: #8b5cf6;
+            --primary-600: #7c3aed;
+            --secondary-500: #ec4899;
+            --neutral-800: #1f2937;
+            --neutral-700: #374151;
+            --neutral-200: #e5e7eb;
+            --neutral-100: #f3f4f6;
+            --neutral-50: #f9fbfb;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--neutral-800);
+            min-height: 100vh;
+            color: var(--neutral-100);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* --- Navbar Styles (copied from chatbot.html) --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: var(--neutral-800);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .navbar-left, .navbar-right {
+            display: flex;
+            align-items: center;
+        }
+        .navbar-logo {
+            height: 40px;
+            width: 40px;
+            colour:var(--primary-600);
+            border-radius: 50%;
+            margin-right: 0.75rem;
+        }
+        .navbar-brand {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .navbar-center {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-link a {
+            color: var(--neutral-100);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .nav-link a:hover {
+            color: var(--primary-500);
+        }
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-500);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* --- Hero Section Styles (copied from chatbot.html) --- */
+        .hero-section {
+            text-align: center;
+            padding: 4rem 1rem;
+        }
+        .hero-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--neutral-200);
+            margin-top: 0.5rem;
+        }
+
+        /* --- Main Content Styles for Roadmap --- */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+        .input-container {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+        .input-container input {
+            flex-grow: 1;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: 2px solid var(--neutral-700);
+            background-color: var(--neutral-700);
+            color: var(--neutral-50);
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            font-size: 1rem;
+        }
+        .input-container input:focus {
+            outline: none;
+            border-color: var(--secondary-500);
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.3);
+        }
+        .input-container button {
+            padding: 1rem 2rem;
+            margin-left: 1rem;
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .input-container button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        .input-container button:disabled {
+            background: var(--neutral-600);
+            cursor: not-allowed;
+        }
+        .roadmap-container {
+            width: 100%;
+            max-width: 900px;
+            background-color: var(--neutral-700);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            transition: opacity 0.5s ease-in-out;
+            opacity: 0;
+        }
+        .roadmap-container.visible {
+            opacity: 1;
+        }
+        .roadmap-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .roadmap-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .roadmap-step {
+            background-color: var(--neutral-800);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        .roadmap-step::before {
+            content: "•";
+            color: var(--secondary-500);
+            font-size: 2rem;
+            position: absolute;
+            left: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .roadmap-step:not(:last-child) {
+            border-left: 2px dashed var(--neutral-700);
+            margin-left: 10px;
+            padding-left: 2rem;
+        }
+        .roadmap-step:last-child {
+            border-left: none;
+            margin-left: 10px;
+            padding-left: 2rem;
+        }
+
+        .loading-dots {
+            display: inline-flex;
+            gap: 0.25rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-dots .dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: var(--neutral-200);
+            border-radius: 50%;
+            animation: bounce 1s infinite;
+        }
+        
+        .loading-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            .navbar-center {
+                margin-top: 1rem;
+            }
+            .nav-links {
+                gap: 1.5rem;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            .input-container {
+                flex-direction: column;
+            }
+            .input-container button {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-logo"><svg
+              fill="none"
+              viewBox="0 0 48 48"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"
+                fill="currentColor"
+              ></path>
+            </svg></div>
+            <div class="navbar-brand">SkillPOP</div>
+        </div>
+        <div class="navbar-center">
+            <ul class="nav-links">
+                <li class="nav-link"><a href="profile.html">Home</a></li>
+                <li class="nav-link"><a href="profile.html#features">Features</a></li>
+                <li class="nav-link"><a href="chatbot.html">Chatbot</a></li>
+                <li class="nav-link"><a href="roadmap.html">Roadmap</a></li>
+            </ul>
+        </div>
+        <div class="navbar-right">
+            <div class="profile-icon"><a href="profile.html">p</a> </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <h1 class="hero-title">Skill Roadmap</h1>
+        <p class="hero-subtitle">Enter a skill to receive a step-by-step learning plan.</p>
+    </div>
+
+    <div class="main-content">
+        <div class="input-container">
+            <input id="skill-input" type="text" placeholder="e.g., Web Development, Data Science, AI..." autofocus />
+            <button id="generate-button" disabled>
+                <span id="button-text">Generate Roadmap</span>
+                <div id="loading-indicator" class="hidden loading-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </button>
+        </div>
+
+        <div id="roadmap-display" class="roadmap-container hidden">
+            <h2 id="roadmap-title" class="roadmap-title"></h2>
+            <ul id="roadmap-list" class="roadmap-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        const skillInput = document.getElementById('skill-input');
+        const generateButton = document.getElementById('generate-button');
+        const buttonText = document.getElementById('button-text');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const roadmapDisplay = document.getElementById('roadmap-display');
+        const roadmapTitle = document.getElementById('roadmap-title');
+        const roadmapList = document.getElementById('roadmap-list');
+
+        const API_URL = "/api/roadmap"; // This points to your new Vercel API endpoint
+
+        skillInput.addEventListener('input', () => {
+            generateButton.disabled = skillInput.value.trim() === '';
+        });
+
+        skillInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && skillInput.value.trim() !== '') {
+                generateRoadmap();
+            }
+        });
+
+        generateButton.addEventListener('click', generateRoadmap);
+
+        async function generateRoadmap() {
+            const skill = skillInput.value.trim();
+            if (!skill) return;
+
+            // Show loading state
+            buttonText.classList.add('hidden');
+            loadingIndicator.classList.remove('hidden');
+            generateButton.disabled = true;
+            
+            // Hide previous results
+            roadmapDisplay.classList.remove('visible');
+            roadmapList.innerHTML = '';
+            roadmapTitle.textContent = '';
+
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ skill: skill })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `API response error: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                
+                // Display the roadmap
+                roadmapTitle.textContent = data.roadmapTitle || "Learning Roadmap";
+                if (data.steps && Array.isArray(data.steps) && data.steps.length > 0) {
+                    data.steps.forEach(step => {
+                        const stepElement = document.createElement('li');
+                        stepElement.classList.add('roadmap-step');
+                        stepElement.textContent = step;
+                        roadmapList.appendChild(stepElement);
+                    });
+                } else {
+                    roadmapList.innerHTML = '<p>No steps were provided for this skill. Please try again with a different skill.</p>';
+                }
+
+                roadmapDisplay.classList.add('visible');
+
+            } catch (error) {
+                console.error('Error generating roadmap:', error);
+                roadmapTitle.textContent = 'An error occurred. Please try again.';
+                roadmapList.innerHTML = `<p>Details: ${error.message}</p>`;
+                roadmapDisplay.classList.add('visible');
+            } finally {
+                buttonText.classList.remove('hidden');
+                loadingIndicator.classList.add('hidden');
+                generateButton.disabled = false;
+                skillInput.focus();
+            }
+        }
+    </script>
+</body>
+</html>

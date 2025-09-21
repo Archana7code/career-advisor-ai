@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Challenges</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Raleway:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-500: #8b5cf6;
+            --primary-600: #7c3aed;
+            --secondary-500: #ec4899;
+            --neutral-800: #1f2937;
+            --neutral-700: #374151;
+            --neutral-200: #e5e7eb;
+            --neutral-100: #f3f4f6;
+            --neutral-50: #f9fbfb;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--neutral-800);
+            min-height: 100vh;
+            color: var(--neutral-100);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* --- Navbar Styles --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: var(--neutral-800);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .navbar-left, .navbar-right {
+            display: flex;
+            align-items: center;
+        }
+        .navbar-logo {
+            height: 40px;
+            width: 40px;
+            color: #8b5cf6;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+        }
+        .navbar-brand {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .navbar-center {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-link a {
+            color: var(--neutral-100);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .nav-link a:hover {
+            color: var(--primary-500);
+        }
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-500);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* --- Hero Section Styles --- */
+        .hero-section {
+            text-align: center;
+            padding: 4rem 1rem;
+        }
+        .hero-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--neutral-200);
+            margin-top: 0.5rem;
+        }
+
+        /* --- Main Content & Form Styles --- */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .challenge-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--neutral-700);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .challenge-container h2 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        .challenge-container h3 {
+            font-size: 1.25rem;
+            color: var(--neutral-200);
+            margin-bottom: 0.5rem;
+        }
+        .challenge-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--neutral-200);
+            text-align: left;
+        }
+        .streak-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-500);
+            margin-bottom: 1.5rem;
+        }
+        .action-button {
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+        .action-button:disabled {
+            background: var(--neutral-600);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .action-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        .loading-dots {
+            display: inline-flex;
+            gap: 0.25rem;
+            align-items: center;
+            justify-content: center;
+        }
+        .loading-dots .dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: var(--neutral-200);
+            border-radius: 50%;
+            animation: bounce 1s infinite;
+        }
+        .loading-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .challenge-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+        .challenge-item {
+            display: flex;
+            align-items: center;
+            background-color: var(--neutral-800);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            gap: 1rem;
+            transition: opacity 0.3s ease;
+        }
+        .challenge-item.completed {
+            opacity: 0.6;
+        }
+        .challenge-item-text {
+            flex-grow: 1;
+        }
+        .challenge-item.completed .challenge-item-text {
+            text-decoration: line-through;
+        }
+        .challenge-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-500);
+            cursor: pointer;
+        }
+
+        .profile-form {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--neutral-700);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            margin-top: 2rem;
+            text-align: left;
+        }
+        .profile-form textarea {
+            width: 100%;
+            height: 120px;
+            background-color: var(--neutral-800);
+            border: 1px solid var(--neutral-600);
+            border-radius: 8px;
+            padding: 1rem;
+            color: var(--neutral-100);
+            font-size: 1rem;
+            resize: none;
+        }
+        .profile-form button {
+            width: 100%;
+        }
+        
+        #edit-profile-button {
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500));
+        }
+
+        #delete-profile-button {
+            background: linear-gradient(45deg, var(--secondary-500), #dc2626);
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            .navbar-center {
+                margin-top: 1rem;
+            }
+            .nav-links {
+                gap: 1.5rem;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            .challenge-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-logo"><svg
+              fill="none"
+              viewBox="0 0 48 48"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"
+                fill="currentColor"
+              ></path>
+            </svg></div>
+            <div class="navbar-brand">SkillPop</div>
+        </div>
+        <div class="navbar-center">
+            <ul class="nav-links">
+                <li class="nav-link"><a href="profile.html">Home</a></li>
+                <li class="nav-link"><a href="profile.html#features">Features</a></li>
+                <li class="nav-link"><a href="chatbot.html">Chatbot</a></li>
+                <li class="nav-link"><a href="roadmap.html">Roadmap</a></li>
+            </ul>
+        </div>
+        <div class="navbar-right">
+            <div class="profile-icon"><a href="profile.html">P</a> </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <h1 class="hero-title">Daily Challenges</h1>
+        <p class="hero-subtitle">Complete a task to build your career-seeking habits.</p>
+    </div>
+
+    <div class="main-content">
+        <div id="profile-section" class="profile-form">
+            <h2>Your Profile</h2>
+            <p>Tell us a little about your job-seeking goals to get personalized challenges.</p>
+            <textarea id="profile-input" placeholder="e.g., I'm a software engineer with 5 years of experience looking for a senior role. My skills include Python, React, and AWS."></textarea>
+            <button id="save-profile-button" class="action-button">Save Profile and Get Challenges</button>
+        </div>
+
+        <div class="challenge-container hidden" id="main-challenge-section">
+            <div id="loading-container" class="hidden">
+                <div class="loading-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+            <div id="challenge-content" class="hidden">
+                <div class="streak-display">Current Streak: <span id="streak-count">0</span></div>
+                
+                <h2>Daily Challenges</h2>
+                <ul id="challenge-list" class="challenge-list">
+                    </ul>
+
+                <div id="profile-actions">
+                    <button id="edit-profile-button" class="action-button">Edit Profile</button>
+                    <button id="delete-profile-button" class="action-button">Delete Profile & Challenges</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const loadingContainer = document.getElementById('loading-container');
+        const challengeContent = document.getElementById('challenge-content');
+        const streakCountElement = document.getElementById('streak-count');
+        const statusMessage = document.getElementById('status-message');
+        const challengeListElement = document.getElementById('challenge-list');
+        const profileSection = document.getElementById('profile-section');
+        const mainChallengeSection = document.getElementById('main-challenge-section');
+        const profileInput = document.getElementById('profile-input');
+        const saveProfileButton = document.getElementById('save-profile-button');
+        const editProfileButton = document.getElementById('edit-profile-button');
+        const deleteProfileButton = document.getElementById('delete-profile-button');
+
+        const API_URL = '/api/daily_challenges';
+        const STORAGE_KEY = 'user_challenge_data';
+        const PROFILE_STORAGE_KEY = 'user_profile_data';
+        const MAX_HISTORY = 10;
+        
+        function getFormattedDate(d) {
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        
+        function getLocalData() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : {
+                streak: 0,
+                last_completion: null,
+                history: []
+            };
+        }
+
+        function setLocalData(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function getProfileData() {
+            return localStorage.getItem(PROFILE_STORAGE_KEY) || null;
+        }
+
+        function setProfileData(profile) {
+            localStorage.setItem(PROFILE_STORAGE_KEY, profile);
+        }
+
+        async function fetchAndRenderChallenges(userProfile) {
+            const localData = getLocalData();
+            const today = new Date();
+            const todayFormatted = getFormattedDate(today);
+            const lastHistoryItem = localData.history[0];
+            
+            loadingContainer.classList.remove('hidden');
+            challengeContent.classList.add('hidden');
+
+            if (lastHistoryItem && lastHistoryItem.date === todayFormatted) {
+                // Challenge for today already exists, no need to fetch.
+                loadingContainer.classList.add('hidden');
+                challengeContent.classList.remove('hidden');
+                renderChallenges(localData);
+            } else {
+                // Fetch a new challenge for today.
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ userProfile })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API response error: ${response.statusText}`);
+                    }
+                    const data = await response.json();
+                    
+                    const newChallenge = {
+                        date: todayFormatted,
+                        task: data.challenge,
+                        completed: false
+                    };
+
+                    localData.history.unshift(newChallenge);
+                    if (localData.history.length > MAX_HISTORY) {
+                        localData.history.pop();
+                    }
+                    
+                    // Reset streak if last completion was not yesterday
+                    const yesterday = new Date(today);
+                    yesterday.setDate(today.getDate() - 1);
+                    const yesterdayFormatted = getFormattedDate(yesterday);
+                    
+                    if (localData.last_completion !== yesterdayFormatted) {
+                        localData.streak = 0;
+                    }
+
+                    localData.last_completion = null; // Reset last_completion for the new day's task
+                    setLocalData(localData);
+                    
+                    loadingContainer.classList.add('hidden');
+                    challengeContent.classList.remove('hidden');
+                    renderChallenges(localData);
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                    loadingContainer.classList.add('hidden');
+                    challengeContent.classList.remove('hidden');
+                    challengeListElement.innerHTML = `<li>Error: Failed to load challenge. Please try again.</li>`;
+                }
+            }
+        }
+
+        function renderChallenges(localData) {
+            const todayFormatted = getFormattedDate(new Date());
+            const todayChallenge = localData.history.find(item => item.date === todayFormatted);
+
+            streakCountElement.textContent = localData.streak;
+            challengeListElement.innerHTML = '';
+
+            // Add the "Today's Challenge" item
+            if (todayChallenge) {
+                const li = document.createElement('li');
+                li.classList.add('challenge-item');
+                if (todayChallenge.completed) {
+                    li.classList.add('completed');
+                }
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = todayChallenge.completed;
+                checkbox.disabled = todayChallenge.completed;
+                checkbox.addEventListener('change', (e) => {
+                    handleCompletion(e, todayChallenge);
+                });
+
+                const textDiv = document.createElement('div');
+                textDiv.classList.add('challenge-item-text');
+                textDiv.innerHTML = `<strong>(Today)</strong> ${todayChallenge.task}`;
+                
+                li.appendChild(checkbox);
+                li.appendChild(textDiv);
+                challengeListElement.appendChild(li);
+            } else {
+                const li = document.createElement('li');
+                li.innerHTML = "No challenge for today. Please save your profile to generate one.";
+                challengeListElement.appendChild(li);
+            }
+
+            // Add the rest of the history
+            localData.history.slice(1).forEach(item => {
+                const li = document.createElement('li');
+                li.classList.add('challenge-item');
+                if (item.completed) {
+                    li.classList.add('completed');
+                }
+
+                const textDiv = document.createElement('div');
+                textDiv.classList.add('challenge-item-text');
+                textDiv.innerHTML = `<strong>${item.date}:</strong> ${item.task}`;
+                
+                li.appendChild(textDiv);
+                challengeListElement.appendChild(li);
+            });
+        }
+        
+        function handleCompletion(e, challengeToUpdate) {
+            const localData = getLocalData();
+            
+            // Find the challenge in the history array
+            const challengeIndex = localData.history.findIndex(item => item.date === challengeToUpdate.date);
+            
+            if (challengeIndex !== -1) {
+                const challengeItem = localData.history[challengeIndex];
+                challengeItem.completed = e.target.checked;
+                
+                // Update streak logic
+                if (challengeItem.completed) {
+                    const todayFormatted = getFormattedDate(new Date());
+                    const yesterdayFormatted = getFormattedDate(new Date(new Date().setDate(new Date().getDate() - 1)));
+                    
+                    if (localData.last_completion === yesterdayFormatted || localData.streak === 0) {
+                        localData.streak++;
+                    } else {
+                        localData.streak = 1;
+                    }
+                    localData.last_completion = todayFormatted;
+                }
+                
+                setLocalData(localData);
+                renderChallenges(localData);
+            }
+        }
+
+        // Event listener for the "Save Profile" button
+        saveProfileButton.addEventListener('click', async () => {
+            const userProfile = profileInput.value.trim();
+            if (userProfile) {
+                setProfileData(userProfile);
+                profileSection.classList.add('hidden');
+                mainChallengeSection.classList.remove('hidden');
+                await fetchAndRenderChallenges(userProfile);
+            }
+        });
+        
+        // Event listener for the "Edit Profile" button
+        editProfileButton.addEventListener('click', () => {
+            profileSection.classList.remove('hidden');
+            mainChallengeSection.classList.add('hidden');
+            profileInput.value = getProfileData(); // Pre-fill the textarea with the current profile
+        });
+        
+        // Event listener for the "Delete Profile" button
+        deleteProfileButton.addEventListener('click', () => {
+            if (confirm("Are you sure you want to delete your profile and all challenge history? This action cannot be undone.")) {
+                localStorage.removeItem(PROFILE_STORAGE_KEY);
+                localStorage.removeItem(STORAGE_KEY);
+                alert("Profile and data have been deleted. Please refresh the page to start over.");
+                location.reload();
+            }
+        });
+
+        async function initApp() {
+            const userProfile = getProfileData();
+
+            if (userProfile) {
+                profileSection.classList.add('hidden');
+                mainChallengeSection.classList.remove('hidden');
+                await fetchAndRenderChallenges(userProfile);
+            } else {
+                profileSection.classList.remove('hidden');
+                mainChallengeSection.classList.add('hidden');
+            }
+        }
+        
+        initApp();
+    </script>
+</body>
+</html>

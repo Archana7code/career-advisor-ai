@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkillPop - Courses & Opportunities</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      :root {
+        --purple-start: #8a2be2;
+        --pink-end: #ff69b4;
+        --bg-color-dark: #121212;
+        --bg-color-light: #f0f2f5;
+        --text-color-dark: #f0f0f0;
+        --text-color-light: #333333;
+        --card-bg-dark: #1e1e1e;
+        --card-bg-light: #ffffff;
+        --border-color-dark: #333;
+        --border-color-light: #ccc;
+        --transition-speed: 0.3s;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        transition: background-color var(--transition-speed),
+          color var(--transition-speed);
+        background-color: var(--bg-color-dark);
+        color: var(--text-color-dark);
+        line-height: 1.6;
+      }
+
+      body.light-mode {
+        background-color: var(--bg-color-light);
+        color: var(--text-color-light);
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5%;
+        border-bottom: 1px solid var(--border-color-dark);
+      }
+
+      .light-mode header {
+        border-bottom-color: var(--border-color-light);
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        color:#8a2be2;
+        transition: color var(--transition-speed);
+      }
+
+      .light-mode .logo {
+        color: var(--text-color-light);
+      }
+
+      .site-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .nav-bar {
+        flex-grow: 1;
+        text-align: center;
+      }
+
+      .nav-bar a {
+        color: var(--text-color-dark);
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: bold;
+        transition: color var(--transition-speed);
+      }
+
+      .light-mode .nav-bar a {
+        color: var(--text-color-light);
+      }
+
+      .nav-bar a:hover {
+        opacity: 0.8;
+      }
+
+      #theme-toggle {
+        background: none;
+        border: none;
+        color: var(--text-color-dark);
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: color var(--transition-speed);
+      }
+
+      .light-mode #theme-toggle {
+        color: var(--text-color-light);
+      }
+
+      .gradient-text {
+        background: linear-gradient(
+          90deg,
+          var(--purple-start),
+          var(--pink-end)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+      }
+
+      main {
+        padding: 40px 5%;
+      }
+
+      section {
+        margin-bottom: 60px;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin-bottom: 20px;
+      }
+
+      p {
+        margin-bottom: 20px;
+        color: #b0b0b0;
+      }
+
+      .light-mode p {
+        color: #666;
+      }
+
+      .card-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        background-color: var(--card-bg-dark);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color var(--transition-speed),
+          box-shadow var(--transition-speed);
+      }
+
+      .light-mode .card {
+        background-color: var(--card-bg-light);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .gradient-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 15px;
+        text-decoration: none;
+        color: #fff;
+        border-radius: 5px;
+        background: linear-gradient(
+          45deg,
+          var(--purple-start),
+          var(--pink-end)
+        );
+        transition: transform var(--transition-speed),
+          box-shadow var(--transition-speed);
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .gradient-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px 5%;
+        border-top: 1px solid var(--border-color-dark);
+        color: #888;
+      }
+
+      .light-mode footer {
+        border-top-color: var(--border-color-light);
+      }
+
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          padding: 20px 20px;
+          gap: 15px;
+        }
+        .nav-bar {
+          margin-top: 10px;
+        }
+        .header-left,
+        #theme-toggle {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body class="dark-mode">
+    <header>
+      <div class="header-left">
+        <span class="logo"><svg
+              fill="none"
+              viewBox="0 0 48 48"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"
+                fill="currentColor"
+              ></path>
+            </svg></i></span>
+        <span class="site-name gradient-text">SkillPop</span>
+      </div>
+      <nav class="nav-bar">
+        <a href="profile.html">Home</a>
+        <a href="profile.html#features">Features</a>
+        <a href="resume_analyzer.html">Resume Analyzer</a>
+        <a href="mock_interview.html">Mock Interview</a>
+        <a href="roadmap.html">Roadmap</a>
+      </nav>
+      <button id="theme-toggle">
+        <i class="fas fa-moon"></i>
+      </button>
+    </header>
+
+    <main>
+      <section id="hero">
+        <h1 class="gradient-text">Ignite Your Career. Find Your Path.</h1>
+        <p>
+          SkillPop is your personalized advisor for career and skill
+          development. Explore courses, discover opportunities, and track your
+          progress with daily challenges and our AI-powered tools.
+        </p>
+      </section>
+
+      <section id="courses">
+        <h2 class="gradient-text">Explore Our Top Courses</h2>
+        <div class="card-container">
+          <div class="card">
+            <h3 class="gradient-text">Full-Stack Web Development</h3>
+            <p>
+              Master the MERN stack with hands-on projects and expert guidance.
+              Build responsive, scalable web applications.
+            </p>
+            <a href="#" class="gradient-btn">Learn More</a>
+          </div>
+          <div class="card">
+            <h3 class="gradient-text">Data Science & AI Fundamentals</h3>
+            <p>
+              Dive into machine learning, data analysis, and Python. Perfect for
+              beginners looking to start a career in AI.
+            </p>
+            <a href="#" class="gradient-btn">Learn More</a>
+          </div>
+          <div class="card">
+            <h3 class="gradient-text">Digital Marketing Pro</h3>
+            <p>
+              Learn SEO, social media strategy, and content creation. Get
+              certified and grow your online presence.
+            </p>
+            <a href="#" class="gradient-btn">Learn More</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="opportunities">
+        <h2 class="gradient-text">Latest Opportunities</h2>
+        <div class="card-container">
+          <div class="card">
+            <h3 class="gradient-text">Software Engineer Internship</h3>
+            <p>
+              Join a fast-growing startup in San Francisco. Build and deploy
+              core features for a cutting-edge platform.
+            </p>
+            <a href="#" class="gradient-btn">Apply Now</a>
+          </div>
+          <div class="card">
+            <h3 class="gradient-text">Data Analyst Role</h3>
+            <p>
+              Analyze large datasets to provide actionable insights. Help a
+              global company make data-driven decisions.
+            </p>
+            <a href="#" class="gradient-btn">Apply Now</a>
+          </div>
+          <div class="card">
+            <h3 class="gradient-text">Freelance UI/UX Designer</h3>
+            <p>
+              Work on a project basis to create stunning user interfaces and
+              seamless user experiences for clients worldwide.
+            </p>
+            <a href="#" class="gradient-btn">Apply Now</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 SkillPop. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+      document
+        .getElementById("theme-toggle")
+        .addEventListener("click", function () {
+          document.body.classList.toggle("light-mode");
+
+          const icon = this.querySelector("i");
+          if (document.body.classList.contains("light-mode")) {
+            icon.classList.remove("fa-sun");
+            icon.classList.add("fa-moon");
+          } else {
+            icon.classList.remove("fa-moon");
+            icon.classList.add("fa-sun");
+          }
+        });
+    </script>
+  </body>
+</html>

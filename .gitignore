@@ -1,0 +1,14 @@
+# Environment variables
+.env
+
+# Node dependencies
+node_modules
+.vercel
+
+api/trial.js
+indexsam.html
+indexsample.html
+landingpage.html
+onboarding.html
+try.html
+

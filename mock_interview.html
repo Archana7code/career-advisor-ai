@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mock Interviewer</title>
+    <!-- Google Fonts - Inter & Raleway -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Raleway:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-500: #8b5cf6;
+            --primary-600: #7c3aed;
+            --secondary-500: #ec4899;
+            --neutral-800: #1f2937;
+            --neutral-700: #374151;
+            --neutral-200: #e5e7eb;
+            --neutral-100: #f3f4f6;
+            --neutral-50: #f9fbfb;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--neutral-800);
+            min-height: 100vh;
+            color: var(--neutral-100);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* --- Navbar Styles --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: var(--neutral-800);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .navbar-left, .navbar-right {
+            display: flex;
+            align-items: center;
+        }
+        .navbar-logo {
+            height: 40px;
+            width: 40px;
+            color: #8b5cf6;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+        }
+        .navbar-brand {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .navbar-center {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-link a {
+            color: var(--neutral-100);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .nav-link a:hover {
+            color: var(--primary-500);
+        }
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-500);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* --- Hero Section Styles --- */
+        .hero-section {
+            text-align: center;
+            padding: 4rem 1rem;
+        }
+        .hero-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--neutral-200);
+            margin-top: 0.5rem;
+        }
+
+        /* --- Main Content & Form Styles --- */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .form-container, .interview-container, .score-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--neutral-700);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            margin-top: 2rem;
+        }
+        .form-container h2, .interview-container h2, .score-container h2 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--neutral-200);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 2px solid var(--neutral-800);
+            background-color: var(--neutral-800);
+            color: var(--neutral-50);
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .action-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+        .action-button:disabled {
+            background: var(--neutral-600);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .action-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Chat Interface Styles */
+        .interview-container {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 500px;
+        }
+
+        .chat-area {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 1rem;
+            border-radius: 12px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .ai-message {
+            background-color: var(--neutral-800);
+            align-self: flex-start;
+        }
+
+        .user-message {
+            background-color: var(--primary-500);
+            align-self: flex-end;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input-container textarea {
+            flex-grow: 1;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 2px solid var(--neutral-800);
+            background-color: var(--neutral-800);
+            color: var(--neutral-50);
+            resize: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input-container button {
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .chat-input-container button:disabled {
+            background: var(--neutral-600);
+            cursor: not-allowed;
+            transform: none;
+        }
+        .end-interview-button {
+            background-color: #dc2626; /* Red color */
+            color: white;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .loading-dots {
+            display: inline-flex;
+            gap: 0.25rem;
+            align-items: center;
+            justify-content: center;
+        }
+        .loading-dots .dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: var(--neutral-200);
+            border-radius: 50%;
+            animation: bounce 1s infinite;
+        }
+        .loading-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+        .score-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        .score-container h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .score-card {
+            background-color: var(--neutral-800);
+            padding: 2rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
+        }
+        .score-card p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            .navbar-center {
+                margin-top: 1rem;
+            }
+            .nav-links {
+                gap: 1.5rem;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            .form-container, .interview-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-logo"><svg
+              fill="none"
+              viewBox="0 0 48 48"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"
+                fill="currentColor"
+              ></path>
+            </svg></div>
+            <div class="navbar-brand">SkillPop</div>
+        </div>
+        <div class="navbar-center">
+            <ul class="nav-links">
+                <li class="nav-link"><a href="profile.html">Home</a></li>
+                <li class="nav-link"><a href="profile.html#features">Features</a></li>
+                <li class="nav-link"><a href="chatbot.html">Chatbot</a></li>
+                <li class="nav-link"><a href="roadmap.html">Roadmap</a></li>
+            </ul>
+        </div>
+        <div class="navbar-right">
+            <div class="profile-icon"><a href="profile.html">P</a> </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h1 class="hero-title">AI Mock Interviewer</h1>
+        <p class="hero-subtitle">Practice for your next job interview with a virtual AI.</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Interview Setup Form -->
+        <div id="form-container" class="form-container">
+            <h2>Start Your Interview</h2>
+            <div class="form-group">
+                <label for="job-role">What job role are you interviewing for?</label>
+                <input type="text" id="job-role" placeholder="e.g., Frontend Developer, Data Scientist">
+            </div>
+            <button id="start-button" class="action-button" disabled>
+                <span id="button-text">Start Interview</span>
+                <div id="loading-indicator" class="hidden loading-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </button>
+        </div>
+
+        <!-- Interview Chat Interface -->
+        <div id="interview-container" class="interview-container">
+            <div id="chat-area" class="chat-area">
+                <!-- Messages will be appended here -->
+            </div>
+            <div class="chat-input-container">
+                <textarea id="user-input" placeholder="Type your answer here..." rows="1"></textarea>
+                <button id="send-button" disabled>Send</button>
+                <button id="end-button" class="action-button end-interview-button" disabled>End</button>
+            </div>
+        </div>
+        
+        <!-- Score and Feedback Container -->
+        <div id="score-container" class="score-container">
+            <h2>Interview Feedback</h2>
+            <div class="score-card">
+                <p><strong>Your Interview Score:</strong> <span id="interview-score"></span></p>
+                <h3>Strengths:</h3>
+                <p id="feedback-strengths"></p>
+                <h3>Areas for Improvement:</h3>
+                <p id="feedback-improvements"></p>
+                <p><strong>Overall Feedback:</strong> <span id="overall-feedback"></span></p>
+            </div>
+            <button id="restart-button" class="action-button mt-4">Start a New Interview</button>
+        </div>
+    </div>
+
+    <script>
+        const jobRoleInput = document.getElementById('job-role');
+        const startButton = document.getElementById('start-button');
+        const buttonText = document.getElementById('button-text');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const formContainer = document.getElementById('form-container');
+        const interviewContainer = document.getElementById('interview-container');
+        const scoreContainer = document.getElementById('score-container');
+        const chatArea = document.getElementById('chat-area');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const endButton = document.getElementById('end-button');
+        const restartButton = document.getElementById('restart-button');
+
+        const API_URL = "http://localhost:3000/api/mock_interview";
+        const conversationHistory = [];
+        let isWaitingForResponse = false;
+
+        jobRoleInput.addEventListener('input', () => {
+            startButton.disabled = jobRoleInput.value.trim() === '';
+        });
+
+        startButton.addEventListener('click', startInterview);
+        sendButton.addEventListener('click', sendMessage);
+        endButton.addEventListener('click', endInterview);
+        restartButton.addEventListener('click', restartInterview);
+        userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        async function startInterview() {
+            const jobRole = jobRoleInput.value.trim();
+            if (!jobRole) return;
+            
+            // Show loading state
+            buttonText.classList.add('hidden');
+            loadingIndicator.classList.remove('hidden');
+            startButton.disabled = true;
+            isWaitingForResponse = true;
+
+            try {
+                // Initial message to prime the AI
+                const initialUserMessage = { role: 'user', parts: [{ text: 'Please start the mock interview.' }] };
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ jobRole, history: [initialUserMessage], action: 'start' })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API response error: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                
+                // Hide form and show interview container
+                formContainer.classList.add('hidden');
+                interviewContainer.style.display = 'flex';
+                
+                // Add the initial messages to history and UI
+                conversationHistory.push(initialUserMessage);
+                addMessage(data.message, 'ai');
+                conversationHistory.push({ role: 'model', parts: [{ text: data.message }] });
+
+            } catch (error) {
+                console.error('Error starting interview:', error);
+                addMessage('An error occurred. Please try again.', 'ai');
+            } finally {
+                buttonText.classList.remove('hidden');
+                loadingIndicator.classList.add('hidden');
+                startButton.disabled = false;
+                sendButton.disabled = false;
+                endButton.disabled = false;
+                isWaitingForResponse = false;
+            }
+        }
+
+        async function sendMessage() {
+            const userMessage = userInput.value.trim();
+            if (!userMessage || isWaitingForResponse) return;
+
+            // Add user message to chat and history
+            addMessage(userMessage, 'user');
+            conversationHistory.push({ role: 'user', parts: [{ text: userMessage }] });
+            userInput.value = '';
+            
+            sendButton.disabled = true;
+            endButton.disabled = true;
+            isWaitingForResponse = true;
+            addMessage('', 'loading'); // Add a loading indicator
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ jobRole: jobRoleInput.value, history: conversationHistory, action: 'continue' })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API response error: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                
+                // Remove loading indicator
+                removeLoadingIndicator();
+                
+                addMessage(data.message, 'ai');
+                conversationHistory.push({ role: 'model', parts: [{ text: data.message }] });
+
+            } catch (error) {
+                console.error('Error sending message:', error);
+                removeLoadingIndicator();
+                addMessage('An error occurred. Please try again.', 'ai');
+            } finally {
+                sendButton.disabled = false;
+                endButton.disabled = false;
+                isWaitingForResponse = false;
+                chatArea.scrollTop = chatArea.scrollHeight;
+            }
+        }
+
+        async function endInterview() {
+            if (isWaitingForResponse) return;
+            
+            sendButton.disabled = true;
+            endButton.disabled = true;
+            userInput.disabled = true;
+            isWaitingForResponse = true;
+
+            addMessage('Ending the interview...', 'user');
+            addMessage('', 'loading');
+
+            try {
+                const finalUserMessage = { role: 'user', parts: [{ text: 'End interview.' }] };
+                conversationHistory.push(finalUserMessage);
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ jobRole: jobRoleInput.value, history: conversationHistory, action: 'end' })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API response error: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                removeLoadingIndicator();
+                
+                // Display the score and feedback
+                document.getElementById('interview-score').textContent = data.score;
+                document.getElementById('feedback-strengths').textContent = data.strengths;
+                document.getElementById('feedback-improvements').textContent = data.improvements;
+                document.getElementById('overall-feedback').textContent = data.overall;
+
+                interviewContainer.classList.add('hidden');
+                scoreContainer.style.display = 'flex';
+
+            } catch (error) {
+                console.error('Error ending interview:', error);
+                removeLoadingIndicator();
+                addMessage('An error occurred while ending the interview.', 'ai');
+            } finally {
+                isWaitingForResponse = false;
+            }
+        }
+        
+        function restartInterview() {
+            window.location.reload();
+        }
+
+        function addMessage(text, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            messageElement.classList.add(`${sender}-message`);
+            
+            if (sender === 'loading') {
+                messageElement.id = 'loading';
+                messageElement.classList.add('loading-dots');
+                messageElement.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+            } else {
+                messageElement.textContent = text;
+            }
+            
+            chatArea.appendChild(messageElement);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        function removeLoadingIndicator() {
+            const loadingElement = document.getElementById('loading');
+            if (loadingElement) {
+                loadingElement.remove();
+            }
+        }
+    </script>
+</body>
+</html>

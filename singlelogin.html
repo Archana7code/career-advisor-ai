@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      as="style"
+      href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+      onload="this.rel='stylesheet'"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <title>SkillPop - Profile Onboarding</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <style type="text/tailwindcss">
+      /* --- Base theme variables and styles --- */
+      @layer base {
+        :root {
+          --bg-color: #f3f4f6;
+          --text-color: #1f2937;
+          --secondary-text-color: #6b7280;
+          --border-color: #d1d5db;
+          --input-bg-color: #ffffff;
+          --primary-color: #4f46e5;
+          --primary-hover-color: #4338ca;
+          --nav-link-color: rgba(31, 41, 55, 0.8);
+          --header-bg-color: #ffffff;
+
+          --primary-500: #7c3aed;
+          --primary-600: #6d28d9;
+          --secondary-500: #ec4899;
+          --neutral-900: #0f172a;
+          --neutral-800: #1e293b;
+          --neutral-700: #334155;
+          --neutral-600: #475569;
+          --neutral-500: #64748b;
+          --neutral-400: #94a3b8;
+          --neutral-300: #cbd5e1;
+          --neutral-200: #e2e8f0;
+          --form-bg: var(--neutral-700);
+          --form-border: var(--neutral-600);
+          --link-color: var(--neutral-300);
+          --link-hover-color: var(--primary-500);
+        }
+
+        .dark {
+          --bg-color: #131118;
+          --text-color: #ffffff;
+          --secondary-text-color: #a69db9;
+          --border-color: #2e2839;
+          --input-bg-color: #1c1924;
+          --primary-color: #5b13ec;
+          --primary-hover-color: #4a0fb8;
+          --nav-link-color: rgba(255, 255, 255, 0.8);
+          --header-bg-color: #131118;
+
+          --text-color: #f8fafc;
+          --body-bg: var(--neutral-900);
+          --header-bg: rgba(15, 23, 42, 0.8);
+          --header-border: var(--neutral-700);
+          --form-bg: var(--neutral-700);
+          --form-border: var(--neutral-600);
+          --link-color: var(--neutral-300);
+          --link-hover-color: var(--primary-500);
+        }
+
+        .light-theme {
+          --text-color: var(--neutral-900);
+          --body-bg: #f8fafc;
+          --header-bg: rgba(248, 250, 252, 0.8);
+          --header-border: var(--neutral-200);
+          --form-bg: #fff;
+          --form-border: var(--neutral-300);
+          --link-color: var(--neutral-600);
+          --link-hover-color: var(--primary-500);
+        }
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: Inter, 'Noto Sans', sans-serif;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .header {
+        background-color: var(--header-bg-color);
+        border-bottom-color: var(--border-color);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+
+      .form-container {
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .form-container.hidden {
+        opacity: 0;
+        transform: scale(0.95);
+        pointer-events: none;
+      }
+
+      .gradient-button {
+        background-image: linear-gradient(to right, #8a2be2, #ff69b4);
+      }
+      .gradient-button:hover {
+        background-image: linear-gradient(to right, #4a0fb8, #cc5490);
+      }
+      .submit-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        border: none;
+        overflow: hidden;
+        border-radius: 0.5rem;
+        height: 3.5rem;
+        background-image: linear-gradient(to right, var(--primary-500), var(--secondary-500));
+        color: #fff;
+        font-size: 1.125rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+      }
+
+      /* Onboarding Form specific styles */
+      .form-container {
+        background-color: var(--form-bg);
+        border-radius: 0.75rem;
+        border: 1px solid var(--form-border);
+        padding: 2rem;
+        max-width: 40rem;
+        margin: 4rem auto;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .form-container h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      .form-group label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--neutral-300);
+      }
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--form-border);
+        background-color: var(--neutral-800);
+        color: var(--text-color);
+        box-sizing: border-box;
+      }
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary-500);
+      }
+      .form-group .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        color: var(--neutral-400);
+      }
+      .form-group .checkbox-group input[type="checkbox"] {
+        appearance: none;
+        width: 1rem;
+        height: 1rem;
+        background-color: var(--neutral-800);
+        border: 1px solid var(--form-border);
+        border-radius: 0.25rem;
+        cursor: pointer;
+        display: grid;
+        place-content: center;
+      }
+      .form-group .checkbox-group input[type="checkbox"]::before {
+        content: "";
+        width: 0.65em;
+        height: 0.65em;
+        clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 45%);
+        transform: scale(0);
+        transform-origin: bottom left;
+        transition: transform 0.2s ease-in-out;
+        background-color: var(--primary-500);
+      }
+      .form-group .checkbox-group input[type="checkbox"]:checked::before {
+        transform: scale(1);
+      }
+      .form-group .checkbox-group input[type="checkbox"]:checked {
+        border-color: var(--primary-500);
+      }
+      .loading-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        color: var(--neutral-300);
+      }
+      .loading-spinner {
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid #fff;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+
+  <body class="font-sans dark">
+    <div class="flex min-h-screen flex-col">
+      <header
+        class="flex items-center justify-between border-b px-10 py-3 header"
+      >
+        <div class="flex items-center gap-4">
+          <div class="h-8 w-8 text-[var(--primary-color)]">
+            <svg
+              fill="none"
+              viewBox="0 0 48 48"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"
+                fill="currentColor"
+              ></path>
+            </svg>
+          </div>
+          <h2 class="text-xl font-bold">SkillPop</h2>
+        </div>
+
+        <nav class="flex items-center gap-8">
+          <a class="text-[var(--nav-link-color)] hover:text-[var(--text-color)]" href="index.html">Home</a>
+          <a class="text-[var(--nav-link-color)] hover:text-[var(--text-color)]" href="index.html#about">About</a>
+          <a class="text-[var(--nav-link-color)] hover:text-[var(--text-color)]" href="index.html#features">Features</a>
+          <a class="text-[var(--nav-link-color)] hover:text-[var(--text-color)]" href="index.html#testimonials">Testimonials</a>
+        </nav>
+
+        <button
+          id="theme-toggle"
+          class="flex items-center justify-center rounded-md h-10 px-4 border border-[var(--border-color)] text-[var(--text-color)] hover:bg-[var(--border-color)]"
+        >
+          <span class="material-symbols-outlined">dark_mode</span>
+        </button>
+      </header>
+
+      <main class="flex flex-1 items-center justify-center py-16">
+        <div class="relative w-full max-w-md px-4 space-y-6">
+          <div class="absolute inset-0 -z-10">
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20 blur-3xl"
+            ></div>
+          </div>
+
+          <div id="login-container" class="form-container space-y-6">
+            <div class="text-center">
+              <h2 class="text-3xl font-bold">Create your SkillPop Account</h2>
+              <p class="mt-2 text-sm text-[var(--secondary-text-color)]">
+                Unlock your potential. Sign up for personalized career advice.
+              </p>
+            </div>
+
+            <form id="signup-form" class="space-y-4">
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[var(--secondary-text-color)]"
+                  >person</span
+                >
+                <input
+                  id="name-input"
+                  class="w-full h-12 rounded-md border border-[var(--border-color)] bg-[var(--input-bg-color)] pl-10 p-4 text-[var(--text-color)] placeholder:text-[var(--secondary-text-color)] focus:border-[var(--primary-color)] focus:ring-2 focus:ring-[var(--primary-color)]/50"
+                  placeholder="Name"
+                  required
+                />
+              </div>
+
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[var(--secondary-text-color)]"
+                  >mail</span
+                >
+                <input
+                  id="email-input"
+                  type="email"
+                  class="w-full h-12 rounded-md border border-[var(--border-color)] bg-[var(--input-bg-color)] pl-10 p-4 text-[var(--text-color)] placeholder:text-[var(--secondary-text-color)] focus:border-[var(--primary-color)] focus:ring-2 focus:ring-[var(--primary-color)]/50"
+                  placeholder="Email"
+                  required
+                />
+              </div>
+
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[var(--secondary-text-color)]"
+                  >lock</span
+                >
+                <input
+                  id="password-input"
+                  type="password"
+                  class="w-full h-12 rounded-md border border-[var(--border-color)] bg-[var(--input-bg-color)] pl-10 p-4 text-[var(--text-color)] placeholder:text-[var(--secondary-text-color)] focus:border-[var(--primary-color)] focus:ring-2 focus:ring-[var(--primary-color)]/50"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                class="w-full h-12 rounded-md gradient-button text-[var(--text-color)] font-bold transition-transform hover:scale-105"
+              >
+                Sign Up
+              </button>
+            </form>
+
+            <div
+              id="signup-success"
+              class="hidden text-center text-green-500 font-bold"
+            >
+              ✅ Account created successfully!
+            </div>
+            
+            <div class="relative">
+              <div class="absolute inset-0 flex items-center">
+                <span class="w-full border-t border-[var(--border-color)]"></span>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                <span
+                  class="px-2 bg-[var(--bg-color)] text-[var(--secondary-text-color)]"
+                  >Or sign up with</span
+                >
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <button
+                class="flex items-center justify-center gap-2 h-10 rounded-md bg-[var(--border-color)] text-[var(--text-color)] hover:opacity-80 transition"
+              >
+                <span>Google</span>
+              </button>
+              <button
+                class="flex items-center justify-center gap-2 h-10 rounded-md bg-[var(--border-color)] text-[var(--text-color)] hover:opacity-80 transition"
+              >
+                <span>LinkedIn</span>
+              </button>
+            </div>
+          </div>
+          
+          <div id="onboarding-container" class="form-container space-y-6 hidden">
+            <div class="text-center">
+              <h2 class="text-3xl font-bold">Welcome! Let's get to know you.</h2>
+              <p class="mt-2 text-sm text-[var(--secondary-text-color)]">
+                Complete your profile to unlock personalized features.
+              </p>
+            </div>
+            <form id="onboarding-form" class="space-y-4">
+              <div class="form-group">
+                <label for="onboarding-name">Your Name</label>
+                <input type="text" id="onboarding-name" name="name" placeholder="John Doe" required>
+              </div>
+              <div class="form-group">
+                <label for="career-goal">Your Career Goal</label>
+                <input type="text" id="career-goal" name="careerGoal" placeholder="e.g., Full-Stack Developer" required>
+              </div>
+              <div class="form-group">
+                <label for="skills">Key Skills (comma separated)</label>
+                <input type="text" id="skills" name="skills" placeholder="e.g., Python, JavaScript, React, SQL" required>
+              </div>
+              <div class="form-group">
+                <label for="bio">Your Bio</label>
+                <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself in a few sentences..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="education">Highest Education</label>
+                <input type="text" id="education" name="education" placeholder="e.g., Bachelor of Science in Computer Science" required>
+              </div>
+              <div class="form-group">
+                <label class="checkbox-group">
+                  <input type="checkbox" id="isStudent" name="isStudent">
+                  Are you currently a student?
+                </label>
+              </div>
+              <button class="submit-button" type="submit" id="onboarding-submit-button">
+                Generate My Profile
+              </button>
+            </form>
+            <div id="loading-message" class="hidden loading-indicator mt-4">
+              <div class="loading-spinner"></div>
+              Thinking... This may take a moment.
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+    const themeToggle = document.getElementById("theme-toggle");
+    const body = document.body;
+    const loginContainer = document.getElementById("login-container");
+    const onboardingContainer = document.getElementById("onboarding-container");
+    const signupForm = document.getElementById("signup-form");
+    const onboardingForm = document.getElementById("onboarding-form");
+    const onboardingNameInput = document.getElementById("onboarding-name");
+
+    // Unified theme initialization function
+    function initializeTheme() {
+        const savedTheme = localStorage.getItem("theme");
+        // Use a consistent class name, e.g., "dark-theme" or "light-theme"
+        if (savedTheme) {
+            body.classList.add(savedTheme);
+        } else {
+            // Default to dark theme if no preference is saved
+            body.classList.add("dark-theme");
+        }
+    }
+
+    // Unified theme icon update function
+    function updateThemeIcon() {
+        // Check for the "dark-theme" class
+        const isDark = body.classList.contains("dark-theme");
+        themeToggle.querySelector("span").textContent = isDark ? "dark_mode" : "light_mode";
+    }
+
+    // Initialize theme and icon on page load
+    initializeTheme();
+    updateThemeIcon();
+
+    // Toggle theme on button click
+    themeToggle.addEventListener("click", () => {
+        // Toggle the theme class
+        body.classList.toggle("light-theme");
+        body.classList.toggle("dark-theme");
+        
+        // Save the new theme preference
+        const newTheme = body.classList.contains("light-theme") ? "light-theme" : "dark-theme";
+        localStorage.setItem("theme", newTheme);
+
+        // Update the icon
+        updateThemeIcon();
+    });
+
+    // Handle signup form submission → show onboarding form
+    signupForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("name-input").value;
+        loginContainer.classList.add("hidden");
+
+        setTimeout(() => {
+            onboardingNameInput.value = name;
+            onboardingContainer.classList.remove("hidden");
+        }, 300);
+    });
+
+    // Handle final onboarding form submission → save data + redirect
+    onboardingForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const submitButton = document.getElementById('onboarding-submit-button');
+        const loadingMessage = document.getElementById('loading-message');
+
+        submitButton.disabled = true;
+        submitButton.style.opacity = 0.5;
+        loadingMessage.classList.remove('hidden');
+
+        // Collect final profile data
+        const finalProfileData = {
+            name: document.getElementById('onboarding-name').value,
+            careerGoal: document.getElementById('career-goal').value,
+            skills: document.getElementById('skills').value,
+            bio: document.getElementById('bio').value,
+            education: document.getElementById('education').value,
+            isStudent: document.getElementById('isStudent').checked,
+        };
+
+        // Save profile data to localStorage
+        localStorage.setItem("userProfile", JSON.stringify(finalProfileData));
+
+        // Simulate loading
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        // Redirect to profile page
+        window.location.href = "profile.html";
+    });
+</script>
+  </body>
+</html>

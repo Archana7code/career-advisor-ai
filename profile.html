@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>User Profile - SkillPop AI</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-500: #7c3aed;
+        --primary-600: #6d28d9;
+        --secondary-500: #ec4899;
+        --neutral-900: #0f172a;
+        --neutral-800: #1e293b;
+        --neutral-700: #334155;
+        --neutral-600: #475569;
+        --neutral-500: #64748b;
+        --neutral-400: #94a3b8;
+        --neutral-300: #cbd5e1;
+        --neutral-200: #e2e8f0;
+        --neutral-100: #f1f5f9;
+        --text-color: #f8fafc;
+        --body-bg: var(--neutral-900);
+        --header-bg: rgba(15, 23, 42, 0.8);
+        --header-border: var(--neutral-700);
+        --section-bg: var(--neutral-800);
+        --card-bg: var(--neutral-700);
+        --card-border: var(--neutral-600);
+        --footer-bg: var(--neutral-900);
+        --footer-border: var(--neutral-700);
+        --link-color: var(--neutral-300);
+        --link-hover-color: var(--primary-500);
+      }
+      body.light-theme {
+        --text-color: var(--neutral-900);
+        --body-bg: #f8fafc;
+        --header-bg: rgba(248, 250, 252, 0.8);
+        --header-border: var(--neutral-200);
+        --section-bg: var(--neutral-100);
+        --card-bg: #fff;
+        --card-border: var(--neutral-300);
+        --footer-bg: var(--neutral-100);
+        --footer-border: var(--neutral-300);
+        --link-color: var(--neutral-600);
+        --link-hover-color: var(--primary-500);
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--body-bg);
+        color: var(--text-color);
+        margin: 0;
+        line-height: 1.6;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--header-border);
+        background-color: var(--header-bg);
+        padding: 1rem 2.5rem;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+      .header-left,
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .header-center {
+        display: flex;
+        align-items: center;
+        gap: 2.5rem;
+      }
+      .logo {
+        height: 2.5rem;
+        width: 2.5rem;
+        color: var(--primary-500);
+      }
+      .web-name {
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: -0.015em;
+      }
+      nav a {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--link-color);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      nav a:hover {
+        color: var(--link-hover-color);
+      }
+      .profile-icon {
+        height: 2.5rem;
+        width: 2.5rem;
+        border-radius: 9999px;
+        border: 2px solid var(--primary-500);
+        background-color: var(--neutral-700);
+        background-image: url("https://placehold.co/100x100/7c3aed/fff.png?text=AC");
+        background-size: cover;
+        cursor: pointer;
+      }
+      .theme-toggle {
+        padding: 0.5rem;
+        border: none;
+        background: transparent;
+        border-radius: 0.375rem;
+        transition: background-color 0.3s;
+        cursor: pointer;
+      }
+      .theme-toggle:hover {
+        background-color: var(--card-bg);
+      }
+      .theme-toggle span {
+        color: var(--link-color);
+        font-size: 1.5rem;
+        transition: color 0.3s;
+      }
+      .section {
+        padding: 6rem 0;
+      }
+      .section-heading {
+        font-size: 2.5rem;
+        font-weight: 800;
+        line-height: 1.25;
+        letter-spacing: -0.025em;
+        text-align: center;
+        margin-bottom: 4rem;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        background-image: linear-gradient(
+          to right,
+          var(--primary-500),
+          var(--secondary-500)
+        );
+      }
+      .grid-3-cols {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 2rem;
+      }
+      @media (min-width: 768px) {
+        .grid-3-cols {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .grid-3-cols {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .grid-2-cols {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 2rem;
+      }
+      @media (min-width: 768px) {
+        .grid-2-cols {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .card {
+        background-color: var(--card-bg);
+        border-radius: 0.75rem;
+        border: 1px solid transparent;
+        transition: all 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        overflow: hidden;
+      }
+      body.light-theme .card {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+      .card:hover {
+        border-color: var(--primary-500);
+        transform: translateY(-4px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+      }
+      .card-content {
+        padding: 1.5rem;
+      }
+      .card-heading {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--text-color);
+      }
+      .card-text {
+        color: var(--neutral-400);
+        font-size: 1rem;
+      }
+      .profile-section {
+        padding: 4rem 0;
+        text-align: center;
+        background: linear-gradient(
+          135deg,
+          var(--neutral-900) 0%,
+          var(--neutral-800) 100%
+        );
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      body.light-theme .profile-section {
+        background: linear-gradient(
+          135deg,
+          var(--neutral-100) 0%,
+          var(--neutral-200) 100%
+        );
+      }
+      .profile-details-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-top: 2rem;
+        width: 100%;
+        max-width: 768px;
+        text-align: left;
+      }
+      @media (min-width: 768px) {
+        .profile-details-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .profile-info-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background-color: var(--card-bg);
+        padding: 1rem 1.5rem;
+        border-radius: 0.75rem;
+        border: 1px solid var(--card-border);
+      }
+      .profile-info-item span.material-symbols-outlined {
+        font-size: 2rem;
+        color: var(--primary-500);
+      }
+      .profile-info-item h4 {
+        margin: 0;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--neutral-400);
+      }
+      .profile-info-item p {
+        margin: 0;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-color);
+      }
+      .profile-image {
+        width: 128px;
+        height: 128px;
+        border-radius: 9999px;
+        border: 4px solid var(--primary-500);
+        margin: 0 auto 1rem;
+        object-fit: cover;
+      }
+      .profile-name {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin: 0;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        background-image: linear-gradient(
+          to right,
+          var(--primary-500),
+          var(--secondary-500)
+        );
+      }
+      .profile-bio {
+        font-size: 1.125rem;
+        color: var(--neutral-400);
+        max-width: 40rem;
+        margin: 0.5rem auto;
+      }
+      .footer {
+        border-top: 1px solid var(--footer-border);
+        padding: 3rem 1.25rem;
+        background-color: var(--footer-bg);
+      }
+      .footer-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+      }
+      @media (min-width: 768px) {
+        .footer-content {
+          flex-direction: row;
+        }
+      }
+      .footer-links a {
+        color: var(--text-color);
+        font-size: 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        margin: 0 1rem;
+        transition: color 0.3s;
+        text-decoration: none;
+      }
+      .footer-links a:hover {
+        color: var(--primary-500);
+      }
+      .social-icons a {
+        color: var(--neutral-500);
+        margin: 0 0.75rem;
+        transition: color 0.3s;
+      }
+      .social-icons a:hover {
+        color: var(--text-color);
+      }
+      .copyright {
+        text-align: center;
+        color: var(--neutral-500);
+        font-size: 0.875rem;
+        margin-top: 2.5rem;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-left">
+        <svg
+          class="logo"
+          fill="none"
+          viewBox="0 0 48 48"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g clip-path="url(#clip0_6_319)">
+            <path
+              d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"
+              fill="currentColor"
+            ></path>
+          </g>
+          <defs>
+            <clipPath id="clip0_6_319">
+              <rect fill="white" height="48" width="48"></rect>
+            </clipPath>
+          </defs>
+        </svg>
+        <span class="web-name">SkillPop</span>
+      </div>
+      <nav class="header-center">
+        <a href="#">Home</a>
+        <a href="#features">Features</a>
+        <a href="#mock-interview">Analytics</a>
+        <a href="#courses-opportunities">Courses & Opportunities</a>
+      </nav>
+      <div class="header-right">
+        <button class="theme-toggle" id="theme-toggle">
+          <span class="material-symbols-outlined"> dark_mode </span>
+        </button>
+        <div class="profile-icon"></div>
+      </div>
+    </header>
+    <main>
+      <section class="profile-section">
+        <img
+          class="profile-image"
+          src="https://placehold.co/200x200/7c3aed/fff.png?text=AC"
+          alt="User Profile Picture"
+        />
+        <h1 class="profile-name"></h1>
+        <p class="profile-bio"></p>
+        <div class="container profile-details-grid">
+          <div class="profile-info-item">
+            <span class="material-symbols-outlined"> book </span>
+            <div>
+              <h4>Student</h4>
+              <p class="student-status" id="student-status"></p>
+            </div>
+          </div>
+          <div class="profile-info-item">
+            <span class="material-symbols-outlined"> work </span>
+            <div>
+              <h4>Career Goal</h4>
+              <p class="career-goal"></p>
+            </div>
+          </div>
+          <div class="profile-info-item">
+            <span class="material-symbols-outlined"> laptop </span>
+            <div>
+              <h4>Skills</h4>
+              <p class="skills"></p>
+            </div>
+          </div>
+          <div class="profile-info-item">
+            <span class="material-symbols-outlined"> school </span>
+            <div>
+              <h4>Education</h4>
+              <p class="education"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <h2 class="section-heading">Explore Our Features</h2>
+        <div class="container grid-3-cols">
+          <a class="card" href="/chatbot.html">
+            <div class="card-content" style="text-align: center;">
+                <span class="material-symbols-outlined" style="font-size: 4rem; color: var(--primary-500);">robot</span>
+                <h3 class="card-heading">AI Chatbot</h3>
+                <p class="card-text">Get instant answers and career advice from our AI assistant.</p>
+            </div>
+          </a>
+          <a class="card" href="roadmap.html">
+            <div class="card-content" style="text-align: center;">
+                <span class="material-symbols-outlined" style="font-size: 4rem; color: var(--secondary-500);">travel_explore</span>
+                <h3 class="card-heading">Roadmap Generator</h3>
+                <p class="card-text">Create a personalized learning roadmap to achieve your career goals.</p>
+            </div>
+          </a>
+          <a class="card" href="resume_analyzer.html">
+            <div class="card-content" style="text-align: center;">
+                <span class="material-symbols-outlined" style="font-size: 4rem; color: var(--neutral-400);">upload_file</span>
+                <h3 class="card-heading">Resume Analyzer</h3>
+                <p class="card-text">Upload your resume for instant feedback and a detailed report.</p>
+            </div>
+          </a>
+          <a class="card" href="mock_interview.html">
+            <div class="card-content" style="text-align: center;">
+                <span class="material-symbols-outlined" style="font-size: 4rem; color: var(--primary-500);">mic</span>
+                <h3 class="card-heading">Mock Interview</h3>
+                <p class="card-text">Practice your interview skills with our AI-powered mock interviews.</p>
+            </div>
+          </a>
+          <a class="card" href="analyzer.html">
+            <div class="card-content" style="text-align: center;">
+                <span class="material-symbols-outlined" style="font-size: 4rem; color: var(--secondary-500);">auto_stories</span>
+                <h3 class="card-heading">Courses & Opportunities</h3>
+                <p class="card-text">Discover curated courses and job openings that match your skills.</p>
+            </div>
+          </a>
+          <a class="card" href="daily_challenges.html">
+            <div class="card-content" style="text-align: center;">
+                <span class="material-symbols-outlined" style="font-size: 4rem; color: var(--neutral-400);">trending_up</span>
+                <h3 class="card-heading">Daily Challenges</h3>
+                <p class="card-text">Hone your skills with daily coding and problem-solving challenges.</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="section" id="mock-interview">
+        <h2 class="section-heading">Mock Interview Analytics</h2>
+        <div class="container grid-2-cols">
+          <a class="card" href="/profile/mock-interview/last-report">
+            <div class="card-content">
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  margin-bottom: 1rem;
+                  gap: 1rem;
+                "
+              >
+                <span
+                  class="material-symbols-outlined"
+                  style="font-size: 4rem; color: var(--primary-500)"
+                >
+                  mic
+                </span>
+                <div>
+                  <h3 class="card-heading">Last Interview Report</h3>
+                  <p class="card-text">Analyzed on June 15, 2024</p>
+                </div>
+              </div>
+              <ul
+                style="
+                  list-style: none;
+                  padding: 0;
+                  margin: 0;
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 1rem;
+                "
+              >
+                <li
+                  style="
+                    background-color: var(--neutral-800);
+                    padding: 0.5rem 1rem;
+                    border-radius: 0.5rem;
+                    text-align: center;
+                    color: var(--text-color);
+                  "
+                >
+                  <span
+                    style="
+                      display: block;
+                      font-size: 1.5rem;
+                      font-weight: bold;
+                      color: var(--primary-500);
+                    "
+                    >85%</span
+                  >
+                  <span style="font-size: 0.875rem">Clarity Score</span>
+                </li>
+                <li
+                  style="
+                    background-color: var(--neutral-800);
+                    padding: 0.5rem 1rem;
+                    border-radius: 0.5rem;
+                    text-align: center;
+                    color: var(--text-color);
+                  "
+                >
+                  <span
+                    style="
+                      display: block;
+                      font-size: 1.5rem;
+                      font-weight: bold;
+                      color: var(--secondary-500);
+                    "
+                    >9/10</span
+                  >
+                  <span style="font-size: 0.875rem">Confidence Rating</span>
+                </li>
+                <li
+                  style="
+                    background-color: var(--neutral-800);
+                    padding: 0.5rem 1rem;
+                    border-radius: 0.5rem;
+                    text-align: center;
+                    color: var(--text-color);
+                  "
+                >
+                  <span
+                    style="
+                      display: block;
+                      font-size: 1.5rem;
+                      font-weight: bold;
+                      color: var(--primary-500);
+                    "
+                    >B+</span
+                  >
+                  <span style="font-size: 0.875rem">Overall Grade</span>
+                </li>
+              </ul>
+            </div>
+          </a>
+          <a class="card" href="/profile/resume-analyzer/upload">
+            <div class="card-content" style="text-align: center">
+              <span
+                class="material-symbols-outlined"
+                style="font-size: 4rem; color: var(--neutral-400)"
+              >
+                upload_file
+              </span>
+              <h3 class="card-heading">Analyze Your Resume</h3>
+              <p class="card-text">
+                Upload your resume to get instant feedback and a detailed report.
+              </p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="section" id="courses-opportunities">
+        <h2 class="section-heading">Courses & Opportunities</h2>
+        <div class="container grid-3-cols">
+          <a class="card" href="/explore/courses/web-dev-course">
+            <div
+              style="
+                height: 150px;
+                background-image: url('https://placehold.co/400x250/334155/fff.png?text=Web+Development');
+                background-size: cover;
+                background-position: center;
+              "
+            ></div>
+            <div class="card-content">
+              <h3 class="card-heading">Full-Stack Web Development</h3>
+              <p class="card-text">
+                A comprehensive course on modern web technologies.
+              </p>
+            </div>
+          </a>
+          <a class="card" href="/explore/opportunities/data-analyst">
+            <div
+              style="
+                height: 150px;
+                background-image: url('https://placehold.co/400x250/475569/fff.png?text=Data+Analyst');
+                background-size: cover;
+                background-position: center;
+              "
+            ></div>
+            <div class="card-content">
+              <h3 class="card-heading">Data Analyst Opening</h3>
+              <p class="card-text">
+                An opportunity to join a growing team at a data science firm.
+              </p>
+            </div>
+          </a>
+          <a class="card" href="/explore/courses/soft-skills">
+            <div
+              style="
+                height: 150px;
+                background-image: url('https://placehold.co/400x250/94a3b8/fff.png?text=Soft+Skills');
+                background-size: cover;
+                background-position: center;
+              "
+            ></div>
+            <div class="card-content">
+              <h3 class="card-heading">Mastering Soft Skills</h3>
+              <p class="card-text">
+                Learn essential communication and collaboration skills.
+              </p>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="footer-content container">
+        <div class="header-left">
+          <svg
+            class="logo"
+            fill="none"
+            viewBox="0 0 48 48"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g clip-path="url(#clip0_6_319)">
+              <path
+                d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"
+                fill="currentColor"
+              ></path>
+            </g>
+            <defs>
+              <clipPath id="clip0_6_319">
+                <rect fill="white" height="48" width="48"></rect>
+              </clipPath>
+            </defs>
+          </svg>
+          <span class="web-name">SkillPop</span>
+        </div>
+        <div style="display: flex; gap: 1rem; text-decoration: none;">
+          <a class="footer-links" href="#">Home</a>
+          <a class="footer-links" href="#features">Features</a>
+          <a class="footer-links" href="#mock-interview">Analytics</a>
+          <a class="footer-links" href="#courses-opportunities">Courses & Opportunities</a>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1.5rem">
+          <a class="social-icons" href="#" aria-label="Twitter">
+            <svg
+              fill="currentColor"
+              height="24px"
+              viewBox="0 0 256 256"
+              width="24px"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M247.39,68.94A8,8,0,0,0,240,64H209.57A48.66,48.66,0,0,0,168.1,40a46.91,46.91,0,0,0-33.75,13.7A47.9,47.9,0,0,0,120,88v6.09C79.74,83.47,46.81,50.72,46.46,50.37a8,8,0,0,0-13.65,4.92c-4.31,47.79,9.57,79.77,22,98.18a110.93,110.93,0,0,0,21.88,24.2c-15.23,17.53-39.21,26.74-39.47,26.84a8,8,0,0,0-3.85,11.93c.75,1.12,3.75,5.05,11.08,8.72C53.51,229.7,65.48,232,80,232c70.67,0,129.72-54.42,135.75-124.44l29.91-29.9A8,8,0,0,0,247.39,68.94Zm-45,29.41a8,8,0,0,0-2.32,5.14C196,166.58,143.28,216,80,216c-10.56,0-18-1.4-23.22-3.08,11.51-6.25,27.56-17,37.88-32.48A8,8,0,0,0,92,169.08c-.47-.27-43.91-26.34-44-96,16,13,45.25,33.17,78.67,38.79A8,8,0,0,0,136,104V88a32,32,0,0,1,9.6-22.92A30.94,30.94,0,0,1,167.9,56c12.66.16,24.49,7.88,29.44,19.21A8,8,0,0,0,204.67,80h16Z"
+              ></path>
+            </svg>
+          </a>
+          <a class="social-icons" href="#" aria-label="LinkedIn">
+            <svg
+              fill="currentColor"
+              height="24px"
+              viewBox="0 0 256 256"
+              width="24px"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"
+              ></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <p class="copyright">© 2024 SkillPop. All rights reserved.</p>
+    </footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const user = JSON.parse(localStorage.getItem("userProfile"));
+        if (user) {
+          document.querySelector(".profile-name").textContent = user.name;
+          document.querySelector(".profile-bio").textContent = user.bio;
+          document.querySelector(".career-goal").textContent = user.careerGoal;
+          document.querySelector(".skills").textContent = user.skills;
+          document.querySelector(".education").textContent = user.education;
+
+          document.getElementById("student-status").textContent =
+            user.isStudent ? "Yes, I am a student" : "No, I am not a student";
+        }
+
+        const themeToggle = document.getElementById("theme-toggle");
+        const body = document.body;
+
+        function initializeTheme() {
+          const savedTheme = localStorage.getItem("theme");
+          if (savedTheme) {
+            body.classList.add(savedTheme);
+          } else {
+            body.classList.add("dark-theme");
+          }
+        }
+
+        function updateThemeIcon() {
+          const isDark = body.classList.contains("dark-theme");
+          themeToggle.querySelector("span").textContent = isDark
+            ? "dark_mode"
+            : "light_mode";
+        }
+
+        initializeTheme();
+        updateThemeIcon();
+
+        themeToggle.addEventListener("click", () => {
+          body.classList.toggle("light-theme");
+          body.classList.toggle("dark-theme");
+          const newTheme = body.classList.contains("light-theme")
+            ? "light-theme"
+            : "dark-theme";
+          localStorage.setItem("theme", newTheme);
+          updateThemeIcon();
+        });
+      });
+    </script>
+  </body>
+</html>

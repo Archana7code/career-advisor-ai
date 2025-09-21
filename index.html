@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link
+      as="style"
+      href="https://fonts.googleapis.com/css2?display=swap&family=Inter%3Awght%40400%3B500%3B700%3B900&family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+      onload="this.rel='stylesheet'"
+      rel="stylesheet"
+    />
+    <title>Landing Page</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style type="text/tailwindcss">
+      /* --- Root Color Variables (Default: Light Theme) --- */
+      :root {
+        --primary-500: #8b5cf6;
+        --primary-600: #7c3aed;
+        --secondary-500: #ec4899;
+        --bg-primary: #f8fafc; /* Very light blue-gray */
+        --bg-secondary: #ffffff;
+        --text-primary: #1f2937;
+        --text-secondary: #4b5563;
+        --border-color: #e5e7eb;
+        --hover-bg: #f1f5f9;
+      }
+      /* --- Dark Theme Variables --- */
+      .dark {
+        --bg-primary: #111827;
+        --bg-secondary: #1f2937;
+        --text-primary: #f3f4f6;
+        --text-secondary: #9ca3af;
+        --border-color: #374151;
+        --hover-bg: #374151;
+      }
+      /* --- Base Styles --- */
+      body {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      .expandable-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+      }
+      .expandable-content.expanded {
+        max-height: 200px; /* Adjust as needed */
+        transition: max-height 0.3s ease-in;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  </head>
+  <body class="dark" id="theme-container">
+    <div class="relative flex min-h-screen flex-col overflow-x-hidden">
+      <header
+        class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid backdrop-blur-sm px-10 py-4 transition-colors"
+        style="
+          background-color: color-mix(
+            in srgb,
+            var(--bg-primary) 80%,
+            transparent
+          );
+          border-color: var(--border-color);
+        "
+      >
+        <div class="flex items-center gap-4">
+          <div class="size-8 text-[var(--primary-500)]">
+            <svg
+              fill="none"
+              viewBox="0 0 48 48"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"
+                fill="currentColor"
+              ></path>
+            </svg>
+          </div>
+          <h2 class="text-2xl font-bold leading-tight tracking-[-0.015em]">
+            SkillPop
+          </h2>
+        </div>
+        <nav class="hidden md:flex items-center gap-10">
+          <a
+            class="text-base font-medium leading-normal hover:text-[var(--primary-500)] transition-colors text-[var(--text-secondary)]"
+            href="#"
+            >Home</a
+          >
+          <a
+            class="text-base font-medium leading-normal hover:text-[var(--primary-500)] transition-colors text-[var(--text-secondary)]"
+            href="#about"
+            >About</a
+          >
+          <a
+            class="text-base font-medium leading-normal hover:text-[var(--primary-500)] transition-colors text-[var(--text-secondary)]"
+            href="#features"
+            >Features</a
+          >
+          <a
+            class="text-base font-medium leading-normal hover:text-[var(--primary-500)] transition-colors text-[var(--text-secondary)]"
+            href="#testimonials"
+            >Testimonials</a
+          >
+        </nav>
+        <div class="flex items-center gap-4">
+          <a
+            href="singlelogin.html"
+            class="flex items-center justify-center rounded-lg h-10 px-4 text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[var(--hover-bg)] transition-colors"
+          >
+            <span class="truncate">Login</span>
+          </a>
+          <button
+            class="p-2 rounded-md transition-colors hover:bg-[var(--hover-bg)]"
+            id="theme-toggle"
+          >
+            <span class="material-symbols-outlined text-[var(--text-primary)]">
+              dark_mode
+            </span>
+          </button>
+          <button class="md:hidden text-[var(--text-primary)]">
+            <span class="material-symbols-outlined"> menu </span>
+          </button>
+        </div>
+      </header>
+      <main class="flex-1">
+        <section
+          class="relative flex items-center justify-center h-[70vh] md:h-[90vh] bg-cover bg-center bg-no-repeat"
+          style="
+            background-image: linear-gradient(
+                to top,
+                var(--bg-primary) 0%,
+                color-mix(in srgb, var(--bg-primary) 40%, transparent) 100%
+              ),
+              url('https://lh3.googleusercontent.com/aida-public/AB6AXuDwfvL0dWnxBSUhtkgv_eapl6WvSBFxPUhAvwC-iiQmZUx9bmfc7DPJPaiBGxGYI6i9_-PZymKzk5FYcUVAkeCWR04ZCPldRmQ3ous734Uk4aU3wSk2PdVl9xDUyT5UL0v-w-bpp5UO10OFEB5LaX2gXuLny5pliQr-bj5ySQfqLqngZPxFQaktnywtb9pTkzUXY7AYbdclvNjOXe-_y4qa03QfwBTFuorZ8w2SLYt-HrdSmWKY4vmAm2M6yPmS2GGZ83SEJGzlEOM');
+          "
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-t via-transparent to-transparent"
+            style="background: linear-gradient(to top, var(--bg-primary), transparent);"
+          ></div>
+          <div
+            class="relative z-10 flex flex-col gap-6 text-center max-w-4xl px-4"
+          >
+            <h1
+              class="text-5xl md:text-7xl font-black leading-tight tracking-[-0.033em] bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary-500)] to-[var(--secondary-500)]"
+            >
+              Unlock Your Career Potential with AI
+            </h1>
+            <p class="text-lg md:text-xl font-normal leading-normal text-[var(--text-secondary)]">
+              SkillPop maps your skills, analyzes your resume, guides mock
+              interviews, and builds your personalized career roadmap.
+            </p>
+            <div class="flex justify-center mt-6">
+              <a
+                href="singlelogin.html"
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 px-8 bg-gradient-to-r from-[var(--primary-500)] to-[var(--secondary-500)] text-white text-lg font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-all duration-300 transform hover:scale-105"
+              >
+                <span class="truncate">Get Started Now</span>
+              </a>
+            </div>
+          </div>
+        </section>
+        <section
+          class="py-16 px-4 md:px-10 text-center"
+          style="background-color: var(--bg-secondary)"
+        >
+          <h2
+            class="text-4xl md:text-5xl font-bold leading-tight tracking-[-0.015em] mb-8 bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary-500)] to-[var(--secondary-500)]"
+          >
+            Feeling lost in your career journey? We've got the map.
+          </h2>
+          <div
+            class="flex flex-col md:flex-row justify-center items-center gap-8"
+          >
+            <div class="flex flex-col items-center gap-4">
+              <div
+                class="flex items-center justify-center size-20 rounded-full text-4xl text-[var(--primary-500)] border-4 border-solid border-[var(--primary-500)]"
+                style="background-color: var(--bg-primary)"
+              >
+                ✨
+              </div>
+              <p class="text-lg font-medium text-[var(--text-secondary)]">
+                Personalized Roadmap
+              </p>
+            </div>
+            <div class="flex flex-col items-center gap-4">
+              <div
+                class="flex items-center justify-center size-20 rounded-full text-4xl text-[var(--primary-500)] border-4 border-solid border-[var(--primary-500)]"
+                style="background-color: var(--bg-primary)"
+              >
+                📄
+              </div>
+              <p class="text-lg font-medium text-[var(--text-secondary)]">
+                Resume Analyzer
+              </p>
+            </div>
+            <div class="flex flex-col items-center gap-4">
+              <div
+                class="flex items-center justify-center size-20 rounded-full text-4xl text-[var(--primary-500)] border-4 border-solid border-[var(--primary-500)]"
+                style="background-color: var(--bg-primary)"
+              >
+                🔍
+              </div>
+              <p class="text-lg font-medium text-[var(--text-secondary)]">
+                Real Opportunities
+              </p>
+            </div>
+          </div>
+        </section>
+        <section class="py-24 px-4 md:px-10" id="about">
+          <div class="max-w-4xl mx-auto text-center">
+            <h2
+              class="text-4xl md:text-5xl font-bold leading-tight tracking-[-0.015em] mb-8 bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary-500)] to-[var(--secondary-500)]"
+            >
+              About SkillPop
+            </h2>
+            <p class="text-lg leading-relaxed text-[var(--text-secondary)]">
+              SkillPop is your AI-powered career companion—analyzing your
+              skills, experience, and aspirations to create personalized
+              roadmaps, recommend career paths, and prepare you for future
+              opportunities. With smart features like an interactive chatbot, AI
+              resume analyzer, mock interviews, streak-based daily tasks, and
+              tailored course recommendations, CareerWise helps students and
+              professionals build skills, stay motivated, and unlock their
+              career potential.
+            </p>
+          </div>
+        </section>
+        <section
+          class="py-24 px-4 md:px-10"
+          id="features"
+          style="background-color: var(--bg-secondary)"
+        >
+          <div class="max-w-6xl mx-auto">
+            <h2
+              class="text-4xl md:text-5xl font-bold leading-tight tracking-[-0.015em] text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary-500)] to-[var(--secondary-500)]"
+            >
+              Key Features
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div
+                class="p-8 rounded-xl border transition-all duration-300 transform hover:-translate-y-2"
+                style="
+                  background-color: var(--bg-primary);
+                  border-color: var(--border-color);
+                "
+              >
+                <h3 class="text-2xl font-bold mb-3">Chatbot AI</h3>
+                <p class="text-base mb-6 text-[var(--text-secondary)]">
+                  Get instant career advice and personalized recommendations
+                  24/7.
+                </p>
+                <button
+                  class="expand-button text-[var(--primary-500)] font-semibold text-base flex items-center gap-2"
+                >
+                  <span>Learn More</span>
+                  <span
+                    class="material-symbols-outlined transition-transform duration-300"
+                    >chevron_right</span
+                  >
+                </button>
+                <div class="expandable-content mt-2">
+                  <p class="text-sm text-[var(--text-secondary)]">
+                    Our AI chatbot can answer all your career-related questions,
+                    helping you navigate your professional journey with ease and
+                    speed. It provides tailored guidance based on your profile
+                    and goals.
+                  </p>
+                </div>
+              </div>
+              <div
+                class="p-8 rounded-xl border transition-all duration-300 transform hover:-translate-y-2"
+                style="
+                  background-color: var(--bg-primary);
+                  border-color: var(--border-color);
+                "
+              >
+                <h3 class="text-2xl font-bold mb-3">Daily Streak Task</h3>
+                <p class="text-base mb-6 text-[var(--text-secondary)]">
+                  Stay motivated with daily tasks tailored to your career goals.
+                </p>
+                <button
+                  class="expand-button text-[var(--primary-500)] font-semibold text-base flex items-center gap-2"
+                >
+                  <span>Learn More</span>
+                  <span
+                    class="material-symbols-outlined transition-transform duration-300"
+                    >chevron_right</span
+                  >
+                </button>
+                <div class="expandable-content mt-2">
+                  <p class="text-sm text-[var(--text-secondary)]">
+                    Complete small, actionable tasks each day to build momentum
+                    towards your career objectives. Our system tracks your
+                    progress, providing a visual representation of your daily
+                    achievements.
+                  </p>
+                </div>
+              </div>
+              <div
+                class="p-8 rounded-xl border transition-all duration-300 transform hover:-translate-y-2"
+                style="
+                  background-color: var(--bg-primary);
+                  border-color: var(--border-color);
+                "
+              >
+                <h3 class="text-2xl font-bold mb-3">Mock Interviews</h3>
+                <p class="text-base mb-6 text-[var(--text-secondary)]">
+                  Practice and improve your interview skills with AI-powered
+                  feedback.
+                </p>
+                <button
+                  class="expand-button text-[var(--primary-500)] font-semibold text-base flex items-center gap-2"
+                >
+                  <span>Learn More</span>
+                  <span
+                    class="material-symbols-outlined transition-transform duration-300"
+                    >chevron_right</span
+                  >
+                </button>
+                <div class="expandable-content mt-2">
+                  <p class="text-sm text-[var(--text-secondary)]">
+                    Our platform simulates real-life interviews, offering
+                    questions based on your target industry. You get instant,
+                    detailed feedback on your answers, body language, and
+                    communication style.
+                  </p>
+                </div>
+              </div>
+              <div
+                class="p-8 rounded-xl border transition-all duration-300 transform hover:-translate-y-2"
+                style="
+                  background-color: var(--bg-primary);
+                  border-color: var(--border-color);
+                "
+              >
+                <h3 class="text-2xl font-bold mb-3">AI-Generated Roadmaps</h3>
+                <p class="text-base mb-6 text-[var(--text-secondary)]">
+                  Get editable, AI-generated career roadmaps for your journey.
+                </p>
+                <button
+                  class="expand-button text-[var(--primary-500)] font-semibold text-base flex items-center gap-2"
+                >
+                  <span>Learn More</span>
+                  <span
+                    class="material-symbols-outlined transition-transform duration-300"
+                    >chevron_right</span
+                  >
+                </button>
+                <div class="expandable-content mt-2">
+                  <p class="text-sm text-[var(--text-secondary)]">
+                    Based on your aspirations, our AI creates a personalized,
+                    step-by-step roadmap to guide you towards your goals. It
+                    includes recommended skills, courses, and milestones.
+                  </p>
+                </div>
+              </div>
+              <div
+                class="p-8 rounded-xl border transition-all duration-300 transform hover:-translate-y-2"
+                style="
+                  background-color: var(--bg-primary);
+                  border-color: var(--border-color);
+                "
+              >
+                <h3 class="text-2xl font-bold mb-3">AI Resume Review</h3>
+                <p class="text-base mb-6 text-[var(--text-secondary)]">
+                  Optimize your resume for success with our intelligent
+                  analysis.
+                </p>
+                <button
+                  class="expand-button text-[var(--primary-500)] font-semibold text-base flex items-center gap-2"
+                >
+                  <span>Learn More</span>
+                  <span
+                    class="material-symbols-outlined transition-transform duration-300"
+                    >chevron_right</span
+                  >
+                </button>
+                <div class="expandable-content mt-2">
+                  <p class="text-sm text-[var(--text-secondary)]">
+                    Our AI analyzes your resume against industry standards and
+                    job descriptions, providing detailed feedback on keywords,
+                    formatting, and content to help you stand out to recruiters.
+                  </p>
+                </div>
+              </div>
+              <div
+                class="p-8 rounded-xl border transition-all duration-300 transform hover:-translate-y-2"
+                style="
+                  background-color: var(--bg-primary);
+                  border-color: var(--border-color);
+                "
+              >
+                <h3 class="text-2xl font-bold mb-3">
+                  Paid Human Resume Analysis
+                </h3>
+                <p class="text-base mb-6 text-[var(--text-secondary)]">
+                  Get expert feedback on your resume from our career coaches.
+                </p>
+                <button
+                  class="expand-button text-[var(--primary-500)] font-semibold text-base flex items-center gap-2"
+                >
+                  <span>Learn More</span>
+                  <span
+                    class="material-symbols-outlined transition-transform duration-300"
+                    >chevron_right</span
+                  >
+                </button>
+                <div class="expandable-content mt-2">
+                  <p class="text-sm text-[var(--text-secondary)]">
+                    For a more in-depth review, our certified career coaches
+                    provide personalized, human-driven analysis of your resume,
+                    offering expert tips and strategies to maximize your chances
+                    of success.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="py-24 px-4 md:px-10">
+          <div class="max-w-4xl mx-auto text-center">
+            <h2
+              class="text-4xl md:text-5xl font-bold leading-tight tracking-[-0.015em] mb-8 bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary-500)] to-[var(--secondary-500)]"
+            >
+              How We Analyze Your Profile
+            </h2>
+            <p class="text-lg leading-relaxed text-[var(--text-secondary)]">
+              SkillPop uses advanced AI algorithms to analyze your profile,
+              including your skills, experience, and career goals. This analysis
+              enables us to provide personalized recommendations for skill
+              development, career paths, and job opportunities, ensuring you
+              receive the most relevant and effective guidance.
+            </p>
+          </div>
+        </section>
+        <section
+          class="py-24 px-4 md:px-10"
+          id="testimonials"
+          style="background-color: var(--bg-secondary)"
+        >
+          <div class="max-w-6xl mx-auto">
+            <h2
+              class="text-4xl md:text-5xl font-bold leading-tight tracking-[-0.015em] text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary-500)] to-[var(--secondary-500)]"
+            >
+              What Our Users Say
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8">
+              <div
+                class="flex flex-col gap-6 p-8 rounded-xl border"
+                style="
+                  background-color: var(--bg-primary);
+                  border-color: var(--border-color);
+                "
+              >
+                <div class="flex items-center gap-4">
+                  <div
+                    class="w-16 h-16 bg-center bg-no-repeat aspect-square bg-cover rounded-full border-2 border-[var(--primary-500)]"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBjhUDKpWhJhohEq5k830KWxtFf_zRZdtHOVzakdevYawnsDPB8_g4cW9LdhLwBrDsa50qA6KkfGPG3ecHF3hXwVRawP340MkaaTznmFtHrZd4ymTy7hxCuM-bAuOBFkN2ltIyCrgzMGrc9nogAB3DL-5Uf4JBt9FGJcejxKoN9HATmCV_TNBXUjo6zctyPv4aX2IPxFl-ZBfMObt9x6wowuC3MEdIU354o-XT7IXQQfgEDjw4GbYXDIEb_-rt3PRLhckQsSQO9IA');
+                    "
+                  ></div>
+                  <div>
+                    <p class="text-lg font-medium leading-normal">Sarah M.</p>
+                    <p class="text-sm text-[var(--text-secondary)]">
+                      Software Engineer
+                    </p>
+                  </div>
+                </div>
+                <p
+                  class="text-base font-normal leading-normal italic text-[var(--text-secondary)]"
+                >
+                  "SkillPop helped me identify my strengths and find a career
+                  path that aligns with my interests. The AI-powered
+                  recommendations were incredibly insightful."
+                </p>
+              </div>
+              <div
+                class="flex flex-col gap-6 p-8 rounded-xl border"
+                style="
+                  background-color: var(--bg-primary);
+                  border-color: var(--border-color);
+                "
+              >
+                <div class="flex items-center gap-4">
+                  <div
+                    class="w-16 h-16 bg-center bg-no-repeat aspect-square bg-cover rounded-full border-2 border-[var(--primary-500)]"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCPDsSNaelMz48UN8ZbKncucRFqirpkDv2Elu7xA5-D7mPk80Rpv3iX9KF2rReQrL9z45vm__Q4yZQ1VjpnRwuiJRIVsE2H7meazSRSqM0rKGWZzLumwU3BlEbsx27IPviZDaGzpHUgfS4nRHlL4HzSw0j4-cZgw0d9t25vbgy4u7A8FxnEQEysff76kezHGBd-N9HBhn5ZVJLnwEc3ZSewVwgrgZA8x6bsc1im-wwjEcmL1b2smJSk69xx3gJNdXFoR51GkdW53_w');
+                    "
+                  ></div>
+                  <div>
+                    <p class="text-lg font-medium leading-normal">David L.</p>
+                    <p class="text-sm text-[var(--text-secondary)]">
+                      Product Manager
+                    </p>
+                  </div>
+                </div>
+                <p
+                  class="text-base font-normal leading-normal italic text-[var(--text-secondary)]"
+                >
+                  "Thanks to SkillPop, I landed my dream job in tech. The
+                  skill development courses and mock interviews were
+                  instrumental in my success."
+                </p>
+              </div>
+              <div
+                class="flex flex-col gap-6 p-8 rounded-xl border"
+                style="
+                  background-color: var(--bg-primary);
+                  border-color: var(--border-color);
+                "
+              >
+                <div class="flex items-center gap-4">
+                  <div
+                    class="w-16 h-16 bg-center bg-no-repeat aspect-square bg-cover rounded-full border-2 border-[var(--primary-500)]"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCWkQCCLfRYEr_MQLZb-Hp4KMsemdaDObjYkWXJdzuv3KFkoyQEmdrvZNEWrp2kMnQXvDlS9ou1ebtEo755P1wS3CUx2rXWsnltLMgeJoAn86PaYk-RwegYHk8FZJgXCogZgwziZoXNfTXSAQYiG0Gr1PN_LmLm7bEyACXpqBzgxR7i8SwlLrGtp9lisTIC9C8SZp8vr6Sw0wfyTOtrNyfPfEoPAT0HxXA0mMgOknLd4wj78zgaTaaV3LkLb3WWhwm8aFvr79CmnCw');
+                    "
+                  ></div>
+                  <div>
+                    <p class="text-lg font-medium leading-normal">Emily R.</p>
+                    <p class="text-sm text-[var(--text-secondary)]">
+                      UX Designer
+                    </p>
+                  </div>
+                </div>
+                <p
+                  class="text-base font-normal leading-normal italic text-[var(--text-secondary)]"
+                >
+                  "SkillPop provided me with the tools and support I needed to
+                  advance my career. The personalized roadmap and resume review
+                  were invaluable."
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer
+        class="border-t border-solid px-5 py-12"
+        style="
+          background-color: var(--bg-secondary);
+          border-color: var(--border-color);
+        "
+      >
+        <div
+          class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8"
+        >
+          <div class="flex items-center gap-4">
+            <div class="size-8 text-[var(--primary-500)]">
+              <svg
+                fill="none"
+                viewBox="0 0 48 48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold">SkillPop</h2>
+          </div>
+          <div
+            class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4"
+          >
+            <a
+              class="text-base font-medium transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+              href="#"
+              >Home</a
+            >
+            <a
+              class="text-base font-medium transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+              href="#about"
+              >About</a
+            >
+            <a
+              class="text-base font-medium transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+              href="#features"
+              >Features</a
+            >
+            <a
+              class="text-base font-medium transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+              href="#"
+              >Terms of Service</a
+            >
+            <a
+              class="text-base font-medium transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+              href="#"
+              >Privacy Policy</a
+            >
+          </div>
+          <div class="flex gap-6">
+            <a
+              class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+              href="#"
+              ><span class="sr-only">Twitter</span>
+              <svg
+                fill="currentColor"
+                height="24px"
+                viewBox="0 0 256 256"
+                width="24px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M247.39,68.94A8,8,0,0,0,240,64H209.57A48.66,48.66,0,0,0,168.1,40a46.91,46.91,0,0,0-33.75,13.7A47.9,47.9,0,0,0,120,88v6.09C79.74,83.47,46.81,50.72,46.46,50.37a8,8,0,0,0-13.65,4.92c-4.31,47.79,9.57,79.77,22,98.18a110.93,110.93,0,0,0,21.88,24.2c-15.23,17.53-39.21,26.74-39.47,26.84a8,8,0,0,0-3.85,11.93c.75,1.12,3.75,5.05,11.08,8.72C53.51,229.7,65.48,232,80,232c70.67,0,129.72-54.42,135.75-124.44l29.91-29.9A8,8,0,0,0,247.39,68.94Zm-45,29.41a8,8,0,0,0-2.32,5.14C196,166.58,143.28,216,80,216c-10.56,0-18-1.4-23.22-3.08,11.51-6.25,27.56-17,37.88-32.48A8,8,0,0,0,92,169.08c-.47-.27-43.91-26.34-44-96,16,13,45.25,33.17,78.67,38.79A8,8,0,0,0,136,104V88a32,32,0,0,1,9.6-22.92A30.94,30.94,0,0,1,167.9,56c12.66.16,24.49,7.88,29.44,19.21A8,8,0,0,0,204.67,80h16Z"
+                ></path>
+              </svg>
+            </a>
+            <a
+              class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+              href="#"
+              ><span class="sr-only">Facebook</span>
+              <svg
+                fill="currentColor"
+                height="24px"
+                viewBox="0 0 256 256"
+                width="24px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm8,191.63V152h24a8,8,0,0,0,0-16H136V112a16,16,0,0,1,16-16h16a8,8,0,0,0,0-16H152a32,32,0,0,0-32,32v24H96a8,8,0,0,0,0,16h24v63.63a88,88,0,1,1,16,0Z"
+                ></path>
+              </svg>
+            </a>
+            <a
+              class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+              href="#"
+              ><span class="sr-only">LinkedIn</span>
+              <svg
+                fill="currentColor"
+                height="24px"
+                viewBox="0 0 256 256"
+                width="24px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <p class="text-center text-sm mt-10 text-[var(--text-secondary)]">
+          © 2024 SkillPop. All rights reserved.
+          <br>Empowering careers with AI. Built with ❤️ by Archana Verma.
+        </p>
+      </footer>
+    </div>
+  </body>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const themeToggle = document.getElementById("theme-toggle");
+    const body = document.body;
+    const expandButtons = document.querySelectorAll(".expand-button");
+
+    // --- Expandable Content Logic ---
+    expandButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const content = button.nextElementSibling;
+        const icon = button.querySelector(".material-symbols-outlined");
+        content.classList.toggle("expanded");
+        icon.classList.toggle("rotate-90");
+      });
+    });
+
+    // --- Theme Toggle Logic ---
+    const storedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    // Set initial theme
+    if (storedTheme === "dark" || (storedTheme === null && prefersDark)) {
+      body.classList.add("dark");
+      themeToggle.querySelector("span").textContent = "dark_mode";
+    } else {
+      body.classList.remove("dark");
+      themeToggle.querySelector("span").textContent = "light_mode";
+    }
+
+    // Handle theme toggle on click
+    themeToggle.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      const isDark = body.classList.contains("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+      themeToggle.querySelector("span").textContent = isDark ? "dark_mode" : "light_mode";
+    });
+  });
+</script>
+</html>

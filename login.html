@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      as="style"
+      href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+      onload="this.rel='stylesheet'"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <title>SkillUp - Sign Up</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <style type="text/tailwindcss">
+      @layer base {
+        :root {
+          --bg-color: #f3f4f6;
+          --text-color: #1f2937;
+          --secondary-text-color: #6b7280;
+          --border-color: #d1d5db;
+          --input-bg-color: #ffffff;
+          --primary-color: #4f46e5;
+          --primary-hover-color: #4338ca;
+          --nav-link-color: rgba(31, 41, 55, 0.8);
+          --header-bg-color: #ffffff;
+        }
+
+        .dark {
+          --bg-color: #131118;
+          --text-color: #ffffff;
+          --secondary-text-color: #a69db9;
+          --border-color: #2e2839;
+          --input-bg-color: #1c1924;
+          --primary-color: #5b13ec;
+          --primary-hover-color: #4a0fb8;
+          --nav-link-color: rgba(255, 255, 255, 0.8);
+          --header-bg-color: #131118;
+        }
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: Inter, 'Noto Sans', sans-serif;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .header {
+        background-color: var(--header-bg-color);
+        border-bottom-color: var(--border-color);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+
+      .form-container {
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .form-container.hidden {
+        opacity: 0;
+        transform: scale(0.95);
+        pointer-events: none;
+      }
+
+      .gradient-button {
+        background-image: linear-gradient(to right, #8a2be2, #ff69b4);
+      }
+      .gradient-button:hover {
+        background-image: linear-gradient(to right, #4a0fb8, #cc5490);
+      }
+    </style>
+  </head>
+
+  <body class="font-sans dark">
+    <div class="flex min-h-screen flex-col">
+      <header
+        class="flex items-center justify-between border-b px-10 py-3 header"
+      >
+        <div class="flex items-center gap-4">
+          <div class="h-8 w-8 text-[var(--primary-color)]">
+            <svg fill="currentColor" viewBox="0 0 48 48">
+              <path
+                d="M24 4C25.7818 14.2173 33.7827 22.2182 44 24C33.7827 25.7818 25.7818 33.7827 24 44C22.2182 33.7827 14.2173 25.7818 4 24C14.2173 22.2182 22.2182 14.2173 24 4Z"
+              />
+            </svg>
+          </div>
+          <h2 class="text-xl font-bold">SkillUp</h2>
+        </div>
+
+        <nav class="flex items-center gap-8">
+          <a class="text-[var(--nav-link-color)] hover:text-[var(--text-color)]" href="#"
+            >Home</a
+          >
+          <a class="text-[var(--nav-link-color)] hover:text-[var(--text-color)]" href="#"
+            >About</a
+          >
+          <a class="text-[var(--nav-link-color)] hover:text-[var(--text-color)]" href="#"
+            >Services</a
+          >
+          <a class="text-[var(--nav-link-color)] hover:text-[var(--text-color)]" href="#"
+            >Contact</a
+          >
+        </nav>
+
+        <button
+          id="theme-toggle"
+          class="flex items-center justify-center rounded-md h-10 px-4 border border-[var(--border-color)] text-[var(--text-color)] hover:bg-[var(--border-color)]"
+        >
+          <span class="material-symbols-outlined">dark_mode</span>
+        </button>
+      </header>
+
+      <main class="flex flex-1 items-center justify-center py-16">
+        <div class="relative w-full max-w-md px-4 space-y-6">
+          <div class="absolute inset-0 -z-10">
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20 blur-3xl"
+            ></div>
+          </div>
+
+          <div id="form-container" class="form-container space-y-6">
+            <div class="text-center">
+              <h2 class="text-3xl font-bold">Create your SkillUp Account</h2>
+              <p class="mt-2 text-sm text-[var(--secondary-text-color)]">
+                Unlock your potential. Sign up for personalized career advice.
+              </p>
+            </div>
+
+            <form id="signup-form" class="space-y-4">
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[var(--secondary-text-color)]"
+                  >person</span
+                >
+                <input
+                  id="name-input"
+                  class="w-full h-12 rounded-md border border-[var(--border-color)] bg-[var(--input-bg-color)] pl-10 p-4 text-[var(--text-color)] placeholder:text-[var(--secondary-text-color)] focus:border-[var(--primary-color)] focus:ring-2 focus:ring-[var(--primary-color)]/50"
+                  placeholder="Name"
+                  required
+                />
+              </div>
+
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[var(--secondary-text-color)]"
+                  >mail</span
+                >
+                <input
+                  id="email-input"
+                  type="email"
+                  class="w-full h-12 rounded-md border border-[var(--border-color)] bg-[var(--input-bg-color)] pl-10 p-4 text-[var(--text-color)] placeholder:text-[var(--secondary-text-color)] focus:border-[var(--primary-color)] focus:ring-2 focus:ring-[var(--primary-color)]/50"
+                  placeholder="Email"
+                  required
+                />
+              </div>
+
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[var(--secondary-text-color)]"
+                  >lock</span
+                >
+                <input
+                  id="password-input"
+                  type="password"
+                  class="w-full h-12 rounded-md border border-[var(--border-color)] bg-[var(--input-bg-color)] pl-10 p-4 text-[var(--text-color)] placeholder:text-[var(--secondary-text-color)] focus:border-[var(--primary-color)] focus:ring-2 focus:ring-[var(--primary-color)]/50"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                class="w-full h-12 rounded-md gradient-button text-[var(--text-color)] font-bold transition-transform hover:scale-105"
+              >
+                Sign Up
+              </button>
+            </form>
+
+            <div
+              id="success-message"
+              class="hidden text-center text-green-500 font-bold"
+            >
+              ✅ Account created successfully!
+            </div>
+
+            <div class="relative">
+              <div class="absolute inset-0 flex items-center">
+                <span class="w-full border-t border-[var(--border-color)]"></span>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                <span
+                  class="px-2 bg-[var(--bg-color)] text-[var(--secondary-text-color)]"
+                  >Or sign up with</span
+                >
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <button
+                class="flex items-center justify-center gap-2 h-10 rounded-md bg-[var(--border-color)] text-[var(--text-color)] hover:opacity-80 transition"
+              >
+                <span>Google</span>
+              </button>
+              <button
+                class="flex items-center justify-center gap-2 h-10 rounded-md bg-[var(--border-color)] text-[var(--text-color)] hover:opacity-80 transition"
+              >
+                <span>LinkedIn</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const themeToggle = document.getElementById("theme-toggle");
+      const body = document.body;
+      const formContainer = document.getElementById("form-container");
+      const signupForm = document.getElementById("signup-form");
+      const successMessage = document.getElementById("success-message");
+
+      // Apply saved theme
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "light") {
+        body.classList.remove("dark");
+      } else {
+        body.classList.add("dark");
+      }
+
+      // Update button icon
+      function updateThemeIcon() {
+        themeToggle.innerHTML = body.classList.contains("dark")
+          ? '<span class="material-symbols-outlined">dark_mode</span>'
+          : '<span class="material-symbols-outlined">light_mode</span>';
+      }
+      updateThemeIcon();
+
+      // Toggle theme
+      themeToggle.addEventListener("click", () => {
+        body.classList.toggle("dark");
+        localStorage.setItem(
+          "theme",
+          body.classList.contains("dark") ? "dark" : "light"
+        );
+        updateThemeIcon();
+      });
+
+      // Handle signup form
+      signupForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        formContainer.classList.add("hidden");
+        successMessage.classList.remove("hidden");
+      });
+    </script>
+  </body>
+</html>
