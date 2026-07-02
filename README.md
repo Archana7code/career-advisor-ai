@@ -165,14 +165,14 @@ To use the AI-powered features, create a `.env` file and add your own API creden
 
 # 🚀 Future Improvements
 
-- User dashboard
-- Progress tracking
-- Save challenge history
-- Resume history
-- Learning analytics
-- Additional AI models
-- Admin dashboard
-- Enhanced accessibility
+- Persist user profiles and login sessions using a database
+- Save learning roadmaps and resume analysis history
+- Track daily challenge progress across sessions
+- Integrate real-time courses and career opportunities APIs
+- Add career progress analytics and personalized insights
+- Support multiple AI models and providers
+- Build an admin dashboard for content management
+- Improve accessibility and performance
 
 ---
 
