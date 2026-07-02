@@ -7,7 +7,7 @@
 Helping students and job seekers make informed career decisions through AI-powered tools for resume analysis, personalized learning, interview preparation, and career guidance.
 
 <p align="center">
-  <a href="career-advisor-ai-weld.vercel.app">🌐 Live Demo</a> •
+  <a href="https://career-advisor-ai-weld.vercel.app/">🌐 Live Demo</a> •
   <a href="https://github.com/Archana7code/career-advisor-ai">💻 Source Code</a>
 </p>
 
