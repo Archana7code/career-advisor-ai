@@ -144,12 +144,6 @@ To use the AI-powered features, create a `.env` file and add your own API creden
 
 ---
 
-### 🤖 AI Chatbot
-
-<img width="1728" height="831" alt="image" src="https://github.com/user-attachments/assets/00f1a4ae-5ef3-455d-9115-0421dc2d65b8" />
-
----
-
 ### 📄 Resume Analyzer
 
 <img width="1749" height="858" alt="image" src="https://github.com/user-attachments/assets/405046a7-6374-448e-85b3-65107fc8bb5b" />
